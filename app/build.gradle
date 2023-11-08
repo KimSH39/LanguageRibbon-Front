@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.example.languageribbon_front'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.languageribbon_front"
-        minSdk 16
-        targetSdk 33
+        minSdk 21
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -30,10 +30,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0' // DrawerLayout
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "com.kakao.sdk:v2-user:2.11.0" // 카카오 로그인
+    implementation 'com.github.shuhart:stepview:1.5.1'//회원가입 stepper
+    implementation 'de.hdodenhof:circleimageview:2.2.0' //동그랗게 이미지 넣기
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
