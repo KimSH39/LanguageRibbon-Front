@@ -13,23 +13,28 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="0.2"
+           android:layout_weight="0.1"
            android:layout_gravity="center"
            android:gravity="center"
            android:orientation="horizontal">
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="한국어"/>
+               android:text="한국어"
+               android:layout_marginRight="10dp"/>
 
            <ImageView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/baseline_compare_arrows_24"/>
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/change_compare_arrow"
+               android:layout_gravity="center_vertical"
+               android:layout_marginRight="10dp"/>
+
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="영어"/>
+
        </LinearLayout>
        <ScrollView
            android:layout_width="match_parent"
