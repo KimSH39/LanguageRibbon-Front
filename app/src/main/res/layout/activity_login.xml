@@ -46,9 +46,10 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/rounded_btn_gray"
                 android:hint="Language Ribbon 이메일 입력"
+                style="@style/customTextViewFontStyle"
                 android:padding="10dp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -58,15 +59,16 @@
                 android:layout_height="wrap_content"
                 android:hint="비밀번호(8-12자 영문자 + 숫자 + 특수문자)"
                 android:background="@drawable/rounded_btn_gray"
+                style="@style/customTextViewFontStyle"
                 android:padding="10dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="8dp"/>
 
             <Button
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
                 android:text="로그인"
+                style="@style/customTextViewFontStyle"
                 android:background="@drawable/rounded_btn"
                 android:textColor="@color/white"
                 app:backgroundTint="#1554F6"/>
