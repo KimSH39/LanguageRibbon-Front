@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".RatingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/customHeaderStyle"
+            android:textSize="30sp"
+            android:text="@string/rating1"
+            android:layout_marginBottom="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/customHeaderStyle"
+            android:textSize="20sp"
+            android:layout_marginBottom="10sp"
+            android:text="@string/rating2"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:isIndicator="false"
+            android:rating="0"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/ratingMent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="#1554F6"
+            android:layout_marginBottom="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/customHeaderStyle"
+            android:text="@string/rating3"
+            android:textSize="20sp"
+            android:layout_marginBottom="10sp"/>
+
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="150sp"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:gravity="top"
+            android:background="#F8F8F8"
+            android:hint="피드백을 남겨 주세요."
+            android:layout_marginBottom="20sp"
+            style="@style/customTextViewFontStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating4"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="30sp"/>
+    </LinearLayout>
+</FrameLayout>

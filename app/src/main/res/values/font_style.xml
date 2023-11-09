@@ -23,5 +23,11 @@
     <style name="customMenuFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+    <style name="customHeaderStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+    <style name="customlightStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/pretendard_extralight</item>
+    </style>
 
 </resources>
