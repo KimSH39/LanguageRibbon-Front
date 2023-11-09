@@ -15,12 +15,14 @@ import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity() {
     private lateinit var mainfragment: MainFragment
     private lateinit var versionfragment: VersionFragment
+    private lateinit var ratingfragment: RatingFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mainfragment=MainFragment()
         versionfragment=VersionFragment()
+        ratingfragment=RatingFragment()
 
         settingSideNavBar()
 
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(versionfragment)
                 }
                 R.id.rating -> {
-                    Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
+                    replaceFragment(ratingfragment)
                 }
             }
 

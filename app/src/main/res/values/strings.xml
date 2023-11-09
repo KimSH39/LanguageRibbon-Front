@@ -15,6 +15,13 @@
         <item>20대</item>
         <item>30대</item>
     </array>
+    <string name="rating1">Language Ribbon\n사용 후기를 남겨 주세요!</string>
+    <string name="rating2">별을 드래그해 별점을 매겨 주세요.</string>
+    <string name="rating3">저희가 더 발전할 수 있도록\n아낌 없는 피드백을 남겨 주세요.</string>
+    <string name="rating4">사용 후기는 n개월 간 보관되며,\nLanguage Ribbon의 성능 개선에\n활용될 수 있습니다.\n아래 제출 버튼을 누르는 것은\n이에 동의하는 걸로 간주됩니다.</string>
+
+    <string name="ratingGood">Language Ribbon이 마음에 드셨군요! 감사합니다!</string>
+    <string name="ratingBad">더 나은 Language Ribbon이 될 수 있도록 노력하겠습니다.</string>
 
     <string name="agree1">
         개인정보 수집 이용 동의 (필수)
@@ -68,5 +75,7 @@
 본 동의는 서비스의 본질적인 기능 제공을 위한 개인정보 수집/이용에 대한 동의로서, 위 내용에 동의하지 않으실 경우 서비스 제공이 불가능합니다.
 위 내용 외 개인정보와 관련한 일반적인 내용은 ‘네이버 개인정보 처리방침’에 따릅니다.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
