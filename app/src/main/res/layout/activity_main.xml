@@ -8,18 +8,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-    layout="@layout/appbar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
-    android:id="@+id/nav_view"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:menu="@menu/drawerlayout"
-    app:itemTextAppearance="@style/customTextViewFontStyle"
-    tools:ignore="MissingConstraints" />
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="#525960"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/drawerlayout"
+        app:itemTextAppearance="@style/customMenuFontStyle"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            layout="@layout/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container"/>
+    </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -9,9 +9,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mainfragment: MainFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,13 +44,19 @@ class MainActivity : AppCompatActivity() {
         // Set a click listener for the navigation items
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_item1 -> {
-                    Toast.makeText(applicationContext, "메뉴아이템 1 선택", Toast.LENGTH_SHORT).show()
+                R.id.main -> {
+                    replaceFragment(mainfragment)
                 }
-                R.id.menu_item2 -> {
+                R.id.voice -> {
                     Toast.makeText(applicationContext, "메뉴아이템 2 선택", Toast.LENGTH_SHORT).show()
                 }
-                R.id.menu_item3 -> {
+                R.id.guid -> {
+                    Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
+                }
+                R.id.version -> {
+                    Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
+                }
+                R.id.rating -> {
                     Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -66,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-
-
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+    }
 }
