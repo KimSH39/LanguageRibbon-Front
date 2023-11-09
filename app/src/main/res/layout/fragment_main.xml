@@ -36,6 +36,7 @@
                android:text="영어"/>
 
        </LinearLayout>
+
        <ScrollView
            android:layout_width="match_parent"
            android:layout_height="0dp"
@@ -86,4 +87,5 @@
            android:src="@drawable/playbtn"/>
 
    </LinearLayout>
+
 </FrameLayout>

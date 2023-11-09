@@ -53,6 +53,7 @@
         app:sv_stepPadding="4dp"
         app:sv_stepViewStyle="@style/StepView"
         app:sv_steps="@array/steps"
+        app:sv_typeface="@font/pretendard_m"
         app:sv_stepsNumber="3"
         app:sv_textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:text="Language Ribbon을 사용하기 위해\n몇 가지 정보가 필요해요"
                     android:gravity="center"
+                    style="@style/customTextViewFontStyle"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"/>
 
@@ -106,6 +108,7 @@
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="이름"
+                    style="@style/customTextViewFontStyle"
                     android:padding="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
                 <LinearLayout
@@ -117,22 +120,28 @@
                         android:id="@+id/email"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_btn_gray"
                         android:hint="이메일"
+                        android:layout_marginRight="5sp"
+                        style="@style/customTextViewFontStyle"
                         android:padding="10dp"
                         tools:ignore="TouchTargetSizeCheck" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="5sp"
+                        style="@style/customTextViewFontStyle"
                         android:text="\@" />
 
                     <Spinner
                         android:id="@+id/emaildomain"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40sp"
                         android:layout_weight="1"
+                        style="@style/customTextViewFontStyle"
+                        android:background="@drawable/spinnerborder"
                         android:layout_marginBottom="10dp"
                         android:entries="@array/email"
                         android:textAlignment="center"
@@ -143,9 +152,10 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="비밀번호"
+                    style="@style/customTextViewFontStyle"
                     android:padding="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -153,9 +163,10 @@
                     android:id="@+id/passwordCheck"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="비밀번호 확인"
+                    style="@style/customTextViewFontStyle"
                     android:padding="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -169,6 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="남성"
+                        style="@style/customTextViewFontStyle"
                         android:layout_marginRight="20dp"
                         android:onClick="onRadioButtonClicked"/>
 
@@ -176,6 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="여성"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
 
@@ -188,7 +201,7 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -208,57 +221,62 @@
                     android:layout_height="wrap_content"
                     android:text="Language Ribbon을 사용하기 위해\n몇 가지 정보가 필요해요"
                     android:gravity="center"
+                    style="@style/customTextViewFontStyle"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="20dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="사용자의 연령대를 알려주세요"
-                    android:gravity="center"
-                    android:layout_gravity="center"
+                    style="@style/customTextViewFontStyle"
                     android:layout_marginBottom="10dp"/>
 
                 <Spinner
                     android:id="@+id/age"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40sp"
                     android:layout_marginBottom="10dp"
                     android:entries="@array/age"
-                    android:textAlignment="center"
-                    android:minHeight="48dp" />
+                    android:background="@drawable/spinnerborder"
+                    style="@style/customTextViewFontStyle"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="사용자를 가장 잘 나타내는 문항을 골라 주세요."
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"/>
+                    style="@style/customTextViewFontStyle"
+                    android:layout_marginBottom="4dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/job"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:layout_marginBottom="10dp"
+                    style="@style/customTextViewFontStyle">
                     <RadioButton android:id="@+id/student"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="학생"
-                        android:layout_marginRight="20dp"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
 
                     <RadioButton android:id="@+id/salary"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="직장인"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
 
                     <RadioButton android:id="@+id/etc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="기타"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
 
@@ -267,8 +285,8 @@
                     android:layout_height="wrap_content"
                     android:text="사용자의 외국어(영어) 실력을 골라 주세요."
                     android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"/>
+                    style="@style/customTextViewFontStyle"
+                    android:layout_marginBottom="4dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/rank"
@@ -277,22 +295,27 @@
                     android:orientation="horizontal"
                     android:gravity="center">
                     <RadioButton android:id="@+id/high"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="상"
-                        android:layout_marginRight="20dp"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
 
                     <RadioButton android:id="@+id/mid"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="중"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
 
                     <RadioButton android:id="@+id/low"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="하"
+                        style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
 
@@ -312,61 +335,94 @@
             app:layout_constraintTop_toBottomOf="@+id/step_view"
             tools:ignore="NotSibling">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/agree1"
-                tools:ignore="MissingConstraints"
-                android:text="Language Ribbon 사용 동의"
-                android:textStyle="bold"
-                android:textColor="#5b5b5b"
-                android:layout_marginStart="80dp"
-                android:button="@drawable/custom_checkbox"
-                android:layout_marginBottom="2dp"/>
-
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                tools:ignore="MissingConstraints">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/agree1"/>
-            </ScrollView>
-
-            <CheckBox
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agree2"
-                tools:ignore="MissingConstraints"
-                android:text="음성 합성 기술 연구를 위한 개인 정보 수집 및 이용"
-                android:textStyle="bold"
-                android:textColor="#5b5b5b"
-                android:layout_marginStart="80dp"
-                android:button="@drawable/custom_checkbox"
-                android:layout_marginBottom="2dp"/>
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                tools:ignore="MissingConstraints">
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/agree2"/>
-            </ScrollView>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/agree3"
-                tools:ignore="MissingConstraints"
-                android:text="전체 동의하기"
-                android:textStyle="bold"
-                android:textColor="#5b5b5b"
-                android:layout_marginStart="80dp"
-                android:button="@drawable/custom_checkbox"
-                android:layout_marginBottom="2dp"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/agree1"
+                        tools:ignore="MissingConstraints"
+                        android:text="Language Ribbon 사용 동의"
+                        style="@style/customTextViewFontStyle"
+                        android:textStyle="bold"
+                        android:textColor="#5b5b5b"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_marginBottom="8dp"/>
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        tools:ignore="MissingConstraints"
+                        android:layout_marginBottom="15dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customTextViewFontStyle"
+                            android:background="@drawable/rounded_btn_gray"
+                            android:text="@string/agree1"/>
+                    </ScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/agree2"
+                        tools:ignore="MissingConstraints"
+                        style="@style/customTextViewFontStyle"
+                        android:text="AI 보이스 생성을 위한 개인 정보 수집 및 이용"
+                        android:textStyle="bold"
+                        android:textColor="#5b5b5b"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_marginBottom="8dp"/>
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="15dp"
+                        tools:ignore="MissingConstraints">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customTextViewFontStyle"
+                            android:background="@drawable/rounded_btn_gray"
+                            android:text="@string/agree2"/>
+                    </ScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical">
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/agree3"
+                        tools:ignore="MissingConstraints"
+                        style="@style/customTextViewFontStyle"
+                        android:text="전체 동의하기"
+                        android:textStyle="bold"
+                        android:textColor="#5b5b5b"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_marginBottom="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -403,7 +459,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
-                android:text="회원가입 입력이 끝났습니다! "
+                android:text="회원가입 입력이 끝났습니다!\n로그인으로 이동합니다!"
+                style="@style/customTextViewFontStyle"
                 android:textAlignment="center"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -423,6 +480,7 @@
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:text="다음"
+        style="@style/customTextViewFontStyle"
         android:background="@drawable/rounded_btn"
         android:textColor="@color/white"
         app:backgroundTint="#1554F6"

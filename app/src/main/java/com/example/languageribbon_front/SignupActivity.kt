@@ -56,9 +56,9 @@ class SignupActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             when (position) {
-                STEP_1 -> transitionToStep(STEP_2, "Next")
-                STEP_2 -> transitionToStep(STEP_3, "Next")
-                STEP_3 -> transitionToStep(FINAL_STEP, "Submit")
+                STEP_1 -> transitionToStep(STEP_2, "다음")
+                STEP_2 -> transitionToStep(STEP_3, "다음")
+                STEP_3 -> transitionToStep(FINAL_STEP, "회원가입")
                 else -> {
 
                     var isExistBlank = false
