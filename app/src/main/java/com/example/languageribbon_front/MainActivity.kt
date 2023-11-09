@@ -14,22 +14,31 @@ import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainfragment: MainFragment
+    private lateinit var versionfragment: VersionFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mainfragment=MainFragment()
+        versionfragment=VersionFragment()
+
         settingSideNavBar()
+
+        if (savedInstanceState == null) {
+            replaceFragment(MainFragment())
+        }
     }
     fun settingSideNavBar() {
-        // Set up the Toolbar
+        // toolbar를 actionbar로 설정
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Add the navigation drawer icon
+        // drawer 아이콘 넣기
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_dehaze_24)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // Implement the side navigation bar
+        // drawer 넣기
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
 
@@ -41,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             R.string.closed
         )
 
-        // Set a click listener for the navigation items
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.main -> {
@@ -54,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
                 }
                 R.id.version -> {
-                    Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
+                    replaceFragment(versionfragment)
                 }
                 R.id.rating -> {
                     Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
