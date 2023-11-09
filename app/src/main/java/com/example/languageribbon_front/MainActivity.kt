@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainfragment: MainFragment
     private lateinit var versionfragment: VersionFragment
     private lateinit var ratingfragment: RatingFragment
+    private lateinit var guidfragment: GuidFragment
+    private lateinit var voicefragment: VoiceFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         mainfragment=MainFragment()
         versionfragment=VersionFragment()
         ratingfragment=RatingFragment()
+        voicefragment=VoiceFragment()
+        guidfragment=GuidFragment()
 
         settingSideNavBar()
 
@@ -58,10 +63,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(mainfragment)
                 }
                 R.id.voice -> {
-                    Toast.makeText(applicationContext, "메뉴아이템 2 선택", Toast.LENGTH_SHORT).show()
+                    replaceFragment(voicefragment)
                 }
                 R.id.guid -> {
-                    Toast.makeText(applicationContext, "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show()
+                    replaceFragment(guidfragment)
                 }
                 R.id.version -> {
                     replaceFragment(versionfragment)
