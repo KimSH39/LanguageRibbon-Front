@@ -15,6 +15,13 @@
         <item>20대</item>
         <item>30대</item>
     </array>
+
+    <array name="steps">
+        <item>정보 입력</item>
+        <item>설문 조사</item>
+        <item>약관 동의</item>
+        <item>회원가입 완료</item>
+    </array>
     <string name="rating1">Language Ribbon\n사용 후기를 남겨 주세요!</string>
     <string name="rating2">별을 드래그해 별점을 매겨 주세요.</string>
     <string name="rating3">저희가 더 발전할 수 있도록\n아낌 없는 피드백을 남겨 주세요.</string>
