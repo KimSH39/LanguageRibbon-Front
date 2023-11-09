@@ -20,4 +20,8 @@
         <item name="android:fontFamily">@font/pretendard_m</item>
     </style>
 
+    <style name="customMenuFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
 </resources>

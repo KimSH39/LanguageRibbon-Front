@@ -2,12 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_item1"
-        android:title="menuItem1" />
+        android:id="@+id/main"
+        android:title="메인으로" />
     <item
-        android:id="@+id/menu_item2"
-        android:title="menuItem2" />
+        android:id="@+id/voice"
+        android:title="초기 목소리 수집" />
     <item
-        android:id="@+id/menu_item3"
-        android:title="menuItem3" />
+        android:id="@+id/guid"
+        android:title="Language Ribbon 사용 가이드" />
+    <item
+        android:id="@+id/version"
+        android:title="버전 정보" />
+    <item
+        android:id="@+id/rating"
+        android:title="평가하기" />
 </menu>
