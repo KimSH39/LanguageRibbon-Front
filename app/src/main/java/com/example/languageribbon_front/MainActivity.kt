@@ -11,6 +11,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.example.languageribbon_front.VoiceFragment
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainfragment: MainFragment
