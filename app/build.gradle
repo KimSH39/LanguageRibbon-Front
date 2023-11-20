@@ -3,8 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// local.properties에서 선언한 값 이용
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
-    namespace 'com.example.languageribbon_front'
+    namespace("com.example.languageribbon_front")
     compileSdk 34
 
     defaultConfig {
@@ -15,10 +19,22 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "HASH_KEY", properties['hash_key']
+        buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
+
+        manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key']]
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField "String", "HASH_KEY", properties['hash_key']
+            buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
+        }
         release {
+            buildConfigField "String", "HASH_KEY", properties['hash_key']
+            buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -42,6 +58,7 @@ dependencies {
     // OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation "com.kakao.sdk:v2-user:2.12.1" // 카카오 로그인
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0' // DrawerLayout
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.github.shuhart:stepview:1.5.1'//회원가입 stepper
