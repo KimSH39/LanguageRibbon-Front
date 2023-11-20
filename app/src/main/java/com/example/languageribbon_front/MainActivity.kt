@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(MainFragment())
         }
     }
+
     fun settingSideNavBar() {
         // toolbar를 actionbar로 설정
         val toolbar: Toolbar = findViewById(R.id.toolbar)

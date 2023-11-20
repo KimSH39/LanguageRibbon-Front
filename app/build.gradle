@@ -52,11 +52,10 @@ android {
 }
 
 dependencies {
-    // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4' //wer cerd을 위한 progress
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'// Retrofit
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'// OkHttp
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation "com.kakao.sdk:v2-user:2.12.1" // 카카오 로그인
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0' // DrawerLayout

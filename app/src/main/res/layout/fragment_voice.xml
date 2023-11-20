@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SignupActivity">
 
     <LinearLayout
@@ -36,14 +37,14 @@
         android:padding="8dp"
         app:sv_animationDuration="1"
         app:sv_animationType="Line"
-        app:sv_doneCircleColor="#84C2FF"
+        app:sv_doneCircleColor="#4198FF"
         app:sv_doneCircleRadius="20dp"
-        app:sv_doneStepLineColor="#84C2FF"
-        app:sv_doneStepMarkColor="@android:color/black"
+        app:sv_doneStepLineColor="#4198FF"
+        app:sv_doneStepMarkColor="@android:color/white"
         app:sv_doneTextColor="@android:color/darker_gray"
         app:sv_nextStepLineColor="#8F8F8F"
         app:sv_nextTextColor="#8F8F8F"
-        app:sv_selectedCircleColor="#002968"
+        app:sv_selectedCircleColor="#0A58B4"
         app:sv_selectedCircleRadius="12dp"
         app:sv_selectedStepNumberColor="#FDFDFD"
         app:sv_selectedTextColor="#002968"
@@ -51,7 +52,7 @@
         app:sv_stepNumberTextSize="12sp"
         app:sv_stepPadding="4dp"
         app:sv_stepViewStyle="@style/StepView"
-        app:sv_steps="@array/steps"
+        app:sv_steps="@array/voicesteps"
         app:sv_typeface="@font/pretendard_m"
         app:sv_stepsNumber="3"
         app:sv_textSize="12sp"
@@ -122,10 +123,61 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="16dp">
+                app:layout_constraintTop_toTopOf="parent">
 
-            <!--                한국어 스크립트-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/record"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        style="@style/customHeaderStyle"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/krscript"
+                        android:text="@string/krscript"
+                        android:gravity="center"
+                        style="@style/customTextViewFontStyle"
+                        android:layout_gravity="start"
+                        android:background="#F8F8F8"
+                        android:layout_marginBottom="30dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/re_record"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"/>
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/playbtn"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -136,7 +188,6 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,12 +198,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-<!--                한국어 wer cer-->
+        <!--                한국어 cer-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cerment"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15sp"
+                    style="@style/customHeaderStyle"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CER"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <at.grabner.circleprogress.CircleProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/krCER"
+                    android:layout_width="150sp"
+                    android:layout_height="150sp"
+                    android:layout_gravity="center"
+                    app:cpv_autoTextSize="true"
+                    app:cpv_barColor="#2196F3"
+                    app:cpv_barWidth="20sp"
+                    app:cpv_innerContourSize="0sp"
+                    app:cpv_maxValue="100"
+                    app:cpv_outerContourSize="0sp"
+                    app:cpv_rimColor="#BBDEFB"
+                    app:cpv_rimWidth="20sp"
+                    app:cpv_showUnit="true"
+                    app:cpv_spinColor="#ABF200"
+                    app:cpv_textColor="#1976D2"
+                    app:cpv_textScale="0.8"
+                    app:cpv_unit="%"
+                    app:cpv_unitColor="#BBDEFB"
+                    app:cpv_unitPosition="right_top"
+                    app:cpv_unitScale="0.8"
+                    app:cpv_value="38"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cer"
+                    android:gravity="center"
+                    android:textColor="#BDBDBD"
+                    android:textSize="10sp"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginBottom="30dp"/>
+
+                <TextView
+                    android:id="@+id/krCerResultMent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="녹음을 성공적으로 마쳤습니다."
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    style="@style/customHeaderStyle"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginBottom="10dp"/>
 
 
             </LinearLayout>
@@ -176,10 +295,61 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="16dp">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <!--                영어 스크립트-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/record"
+                        android:gravity="start"
+                        style="@style/customHeaderStyle"
+                        android:textSize="20sp"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/enscript"
+                        android:text="@string/enscript"
+                        android:gravity="center"
+                        style="@style/customTextViewFontStyle"
+                        android:layout_gravity="center"
+                        android:background="#F8F8F8"
+                        android:layout_marginBottom="30dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/re_record"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"/>
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/playbtn"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -190,7 +360,6 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -201,12 +370,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <!--                영어 wer cer-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cerment"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15sp"
+                    style="@style/customHeaderStyle"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CER"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <at.grabner.circleprogress.CircleProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/enCER"
+                    android:layout_width="150sp"
+                    android:layout_height="150sp"
+                    android:layout_gravity="center"
+                    app:cpv_autoTextSize="true"
+                    app:cpv_barColor="#2196F3"
+                    app:cpv_barWidth="20sp"
+                    app:cpv_innerContourSize="0sp"
+                    app:cpv_maxValue="100"
+                    app:cpv_outerContourSize="0sp"
+                    app:cpv_rimColor="#BBDEFB"
+                    app:cpv_rimWidth="20sp"
+                    app:cpv_showUnit="true"
+                    app:cpv_spinColor="#ABF200"
+                    app:cpv_textColor="#1976D2"
+                    app:cpv_textScale="0.8"
+                    app:cpv_unit="%"
+                    app:cpv_unitColor="#BBDEFB"
+                    app:cpv_unitPosition="right_top"
+                    app:cpv_unitScale="0.8"
+                    app:cpv_value="38"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cer"
+                    android:gravity="center"
+                    android:textColor="#BDBDBD"
+                    android:textSize="10sp"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="30dp"/>
+
+                <TextView
+                    android:id="@+id/enCerResultMent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="녹음을 성공적으로 마쳤습니다."
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    style="@style/customHeaderStyle"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginBottom="10dp"/>
 
 
             </LinearLayout>
@@ -232,7 +469,6 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -246,7 +482,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
-                android:text="회원가입 입력이 끝났습니다!\n로그인으로 이동합니다!"
+                android:text="초기 목소리 수집이 완료되었습니다!\n메인으로 이동합니다!"
                 style="@style/customTextViewFontStyle"
                 android:textAlignment="center"
                 android:textSize="15sp"
