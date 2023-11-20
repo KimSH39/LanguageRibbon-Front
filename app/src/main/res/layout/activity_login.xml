@@ -73,7 +73,7 @@
                 android:textColor="@color/white"
                 app:backgroundTint="#1554F6"/>
             <ImageView
-                android:id="@+id/kakao"
+                android:id="@+id/kakaobtn"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

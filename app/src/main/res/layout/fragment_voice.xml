@@ -90,27 +90,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="16dp">
 
-<!--                <ScrollView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:adjustViewBounds="true"-->
-<!--                        android:src="@drawable/voice_guid" />-->
-<!--                </ScrollView>-->
-
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="80dp"
-                        tools:listitem="@layout/item_script" />
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/voice_guid" />
                 </ScrollView>
 
             </LinearLayout>
@@ -137,17 +125,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="16dp">
 
-<!--                <ScrollView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/recyclerView"-->
-<!--                        android:layout_width="360dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginBottom="80dp"-->
-<!--                        tools:ignore="DuplicateIds" />-->
-<!--                </ScrollView>-->
+            <!--                한국어 스크립트-->
 
             </LinearLayout>
 
@@ -174,84 +152,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+<!--                한국어 wer cer-->
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/agree1"
-                        tools:ignore="MissingConstraints"
-                        android:text="Language Ribbon 사용 동의"
-                        style="@style/customTextViewFontStyle"
-                        android:textStyle="bold"
-                        android:textColor="#5b5b5b"
-                        android:button="@drawable/custom_checkbox"
-                        android:layout_marginBottom="8dp"/>
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        tools:ignore="MissingConstraints"
-                        android:layout_marginBottom="15dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/customTextViewFontStyle"
-                            android:background="@drawable/rounded_btn_gray"
-                            android:text="@string/agree1"/>
-                    </ScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/agree2"
-                        tools:ignore="MissingConstraints"
-                        style="@style/customTextViewFontStyle"
-                        android:text="AI 보이스 생성을 위한 개인 정보 수집 및 이용"
-                        android:textStyle="bold"
-                        android:textColor="#5b5b5b"
-                        android:button="@drawable/custom_checkbox"
-                        android:layout_marginBottom="8dp"/>
+            </LinearLayout>
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginBottom="15dp"
-                        tools:ignore="MissingConstraints">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/customTextViewFontStyle"
-                            android:background="@drawable/rounded_btn_gray"
-                            android:text="@string/agree2"/>
-                    </ScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.2"
-                    android:orientation="vertical">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/agree3"
-                        tools:ignore="MissingConstraints"
-                        style="@style/customTextViewFontStyle"
-                        android:text="전체 동의하기"
-                        android:textStyle="bold"
-                        android:textColor="#5b5b5b"
-                        android:button="@drawable/custom_checkbox"
-                        android:layout_marginBottom="2dp"/>
-                </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/STEP_4"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_view"
+            tools:ignore="NotSibling">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp">
+
+                <!--                영어 스크립트-->
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/STEP_5"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_view"
+            tools:ignore="NotSibling">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!--                영어 wer cer-->
+
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
