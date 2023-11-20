@@ -24,8 +24,10 @@
     </array>
     <array name="voicesteps">
         <item>순서 소개</item>
-        <item>목소리 녹음</item>
-        <item>목소리 확인</item>
+        <item>한국어 목소리 녹음</item>
+        <item>한국어 녹음 품질 확인</item>
+        <item>영어 목소리 녹음</item>
+        <item>영어 녹음 품질 확인</item>
     </array>
     <string name="rating1">Language Ribbon\n사용 후기를 남겨 주세요!</string>
     <string name="rating2">별을 드래그해 별점을 매겨 주세요.</string>
@@ -34,6 +36,7 @@
 
     <string name="ratingGood">Language Ribbon이 마음에 드셨군요! 감사합니다!</string>
     <string name="ratingBad">더 나은 Language Ribbon이 될 수 있도록 노력하겠습니다.</string>
+
 
     <string name="agree1">
         개인정보 수집 이용 동의 (필수)
