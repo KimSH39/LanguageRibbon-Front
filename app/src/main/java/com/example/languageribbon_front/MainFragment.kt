@@ -7,6 +7,8 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
@@ -30,6 +33,8 @@ class MainFragment : Fragment() {
     private var mediaRecorder: MediaRecorder? = null
     private var audioFilePath: String? = null
     private var isRecording = false
+
+    private var isEnglishToKorea = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +55,27 @@ class MainFragment : Fragment() {
             }
             updateButtonImage()
         }
+
+        binding.switchbtn.setOnClickListener {
+            swapTexts()
+        }
     }
+
+    private fun swapTexts() {
+        val koreaText = binding.korea.text.toString()
+        val englishText = binding.english.text.toString()
+
+        if (isEnglishToKorea) {
+            binding.korea.text = "한국어"
+            binding.english.text = "영어"
+        } else {
+            binding.korea.text = "영어"
+            binding.english.text = "한국어"
+        }
+
+        isEnglishToKorea = !isEnglishToKorea
+    }
+
     private fun updateButtonImage() {
         val imageResource = if (isRecording) {
             R.drawable.playingbtn
