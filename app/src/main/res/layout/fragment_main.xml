@@ -18,12 +18,14 @@
            android:gravity="center"
            android:orientation="horizontal">
            <TextView
-               android:layout_width="wrap_content"
+               android:id="@+id/korea"
+               android:layout_width="40sp"
                android:layout_height="wrap_content"
                android:text="한국어"
                android:layout_marginRight="10dp"/>
 
            <ImageView
+               android:id="@+id/switchbtn"
                android:layout_width="30dp"
                android:layout_height="30dp"
                android:src="@drawable/change_compare_arrow"
@@ -31,7 +33,8 @@
                android:layout_marginRight="10dp"/>
 
            <TextView
-               android:layout_width="wrap_content"
+               android:id="@+id/english"
+               android:layout_width="40sp"
                android:layout_height="wrap_content"
                android:text="영어"/>
 
