@@ -213,6 +213,7 @@ class VoiceFragment : Fragment() {
             release()
             mediaPlayer = null
             updateRecordImage1()
+            soundVisualizerView1.stopVisualizing()
             handler.removeCallbacks(updateSeekBar)
         }
     }
@@ -222,6 +223,7 @@ class VoiceFragment : Fragment() {
             release()
             mediaPlayer = null
             updateRecordImage2()
+            soundVisualizerView2.stopVisualizing()
             handler.removeCallbacks(updateSeekBar)
         }
     }
