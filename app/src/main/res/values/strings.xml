@@ -31,7 +31,7 @@
     <string name="krscript">\n\n저, __계정에 등록된 이름__은\n Language Ribbon에 제 목소리를 등록하며,\n이를 통해 제 Language Ribbon 계정에\n제 목소리를 사용할 수 있는 권한을 부여함을 동의합니다.\n %1$s\n\n</string>
     <string name="enscript">\n\nI, __Registered Name__ register my voice with Language Ribbon\nand agree to grant my Language Ribbon account\nthe rights to use my voice.\n %1$s\n\n</string>
 
-    <string name="cerment">목소리 녹음 정확도를\n평가한 결과입니다.</string>
+    <string name="cerment">목소리 녹음 정확도를 평가한 결과입니다.</string>
     <string name="cer">* CER(Character Error Rate) </string>
     <string name="rating1">Language Ribbon\n사용 후기를 남겨 주세요!</string>
     <string name="rating2">별을 드래그해 별점을 매겨 주세요.</string>

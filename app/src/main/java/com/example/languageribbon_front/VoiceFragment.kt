@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import com.example.languageribbon_front.MainFragment.Companion.PERMISSION_REQUEST_CODE
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import android.media.audiofx.Visualizer
 
 class VoiceFragment : Fragment() {
     private var _binding: FragmentVoiceBinding? = null
@@ -34,6 +35,9 @@ class VoiceFragment : Fragment() {
 
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler()
+
+    private lateinit var soundVisualizerView1: SoundVisualizerView
+    private lateinit var soundVisualizerView2: SoundVisualizerView
 
     companion object {
         const val STEP_1 = 0
@@ -58,14 +62,16 @@ class VoiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        soundVisualizerView1 = view.findViewById(R.id.soundVisualizerView1)
+        soundVisualizerView2 = view.findViewById(R.id.soundVisualizerView2)
+
         binding.button.setOnClickListener {
             when (position) {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
                 STEP_2 -> transitionToStep(STEP_3, "다음")
                 STEP_3 -> transitionToStep(STEP_4, "다음")
                 STEP_4 -> transitionToStep(STEP_5, "초기 목소리 설정 완료")
-                //STEP_5 -> transitionToStep(FINAL_STEP, "회원가입")
-                else -> {}
+                else -> {navigateToMainFragment()}
             }
         }
 
@@ -115,14 +121,10 @@ class VoiceFragment : Fragment() {
             // Play recorded audio
             if (audioFilePath != null) {
                 if (mediaPlayer == null) {
-                    // Start playing
                     startPlaying1()
                 } else {
-                    // Stop playing
                     stopPlaying1()
                 }
-            } else {
-                Toast.makeText(requireContext(), "No audio file to play", Toast.LENGTH_SHORT).show()
             }
 
             updateListeningImage1()
@@ -135,8 +137,6 @@ class VoiceFragment : Fragment() {
                 } else {
                     stopPlaying2()
                 }
-            } else {
-                Toast.makeText(requireContext(), "No audio file to play", Toast.LENGTH_SHORT).show()
             }
 
             updateListeningImage2()
@@ -147,6 +147,15 @@ class VoiceFragment : Fragment() {
         }
     }
 
+    private fun navigateToMainFragment() {
+        // Here you can use FragmentManager to navigate to MainFragment.
+        // Make sure to replace R.id.fragment_container with the actual container ID in your layout.
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.container, MainFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun startPlaying1() {
         mediaPlayer = MediaPlayer().apply {
             try {
@@ -155,12 +164,18 @@ class VoiceFragment : Fragment() {
                 start()
                 updateListeningImage1()
 
+                setOnCompletionListener {
+                    binding.listening1.setImageResource(R.drawable.playbtn)
+                }
+
                 handler.postDelayed(updateSeekBar, 100)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
+        soundVisualizerView1.startVisualizing(true)
     }
+
     private fun startPlaying2() {
         mediaPlayer = MediaPlayer().apply {
             try {
@@ -169,11 +184,16 @@ class VoiceFragment : Fragment() {
                 start()
                 updateListeningImage2()
 
+                setOnCompletionListener {
+                    binding.listening2.setImageResource(R.drawable.playbtn)
+                }
+
                 handler.postDelayed(updateSeekBar, 100)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
+        soundVisualizerView2.startVisualizing(true)
     }
 
     private val updateSeekBar = object : Runnable {
@@ -241,6 +261,8 @@ class VoiceFragment : Fragment() {
         }
         binding.listening2.setImageResource(imageResource)
     }
+
+
     private fun startRecording1() {
         if (checkPermissions()) {
             val fileName = "audio_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
@@ -248,21 +270,28 @@ class VoiceFragment : Fragment() {
 
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP) // Use THREE_GPP for WAV format
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // Use AMR_NB for WAV format
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
                 setOutputFile(audioFilePath)
-                mediaRecorder?.setAudioSamplingRate(44100)
-                mediaRecorder?.setAudioEncodingBitRate(96000)
+                setAudioSamplingRate(44100)
+                setAudioEncodingBitRate(96000)
                 try {
                     prepare()
                     start()
                     isRecording = true
-                    Toast.makeText(requireContext(), "Recording started", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "녹음 시작", Toast.LENGTH_SHORT).show()
 
                     binding.record1.setBackgroundResource(R.drawable.playingbtn)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+            }
+            soundVisualizerView1.startVisualizing(false)
+
+            soundVisualizerView1.onRequestCurrentAmplitude = {
+                val maxAmplitude = mediaRecorder?.maxAmplitude ?: 0
+                //maxAmplitude에 값 곱해서 진폭 크기 키우기
+                maxAmplitude * 3
             }
         } else {
             requestPermissions()
@@ -276,21 +305,27 @@ class VoiceFragment : Fragment() {
 
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP) // Use THREE_GPP for WAV format
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // Use AMR_NB for WAV format
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
                 setOutputFile(audioFilePath)
-                mediaRecorder?.setAudioSamplingRate(44100)
-                mediaRecorder?.setAudioEncodingBitRate(96000)
+                setAudioSamplingRate(44100)
+                setAudioEncodingBitRate(96000)
                 try {
                     prepare()
                     start()
                     isRecording = true
-                    Toast.makeText(requireContext(), "Recording started", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "녹음 시작", Toast.LENGTH_SHORT).show()
 
-                    binding.record1.setBackgroundResource(R.drawable.playingbtn)
+                    binding.record2.setBackgroundResource(R.drawable.playingbtn)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+            }
+            soundVisualizerView2.startVisualizing(false)
+
+            soundVisualizerView2.onRequestCurrentAmplitude = {
+                val maxAmplitude = mediaRecorder?.maxAmplitude ?: 0
+                maxAmplitude * 3
             }
         } else {
             requestPermissions()
@@ -304,10 +339,10 @@ class VoiceFragment : Fragment() {
             reset()
             release()
             isRecording = false
-            Toast.makeText(requireContext(), "Recording stopped", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
 
             binding.record1.setBackgroundResource(R.drawable.playbtn)
-
+            soundVisualizerView1.stopVisualizing()
             sendAudioToBackend()
         }
     }
@@ -318,10 +353,10 @@ class VoiceFragment : Fragment() {
             reset()
             release()
             isRecording = false
-            Toast.makeText(requireContext(), "Recording stopped", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
 
             binding.record2.setBackgroundResource(R.drawable.playbtn)
-
+            soundVisualizerView2.stopVisualizing()
             sendAudioToBackend()
         }
     }
