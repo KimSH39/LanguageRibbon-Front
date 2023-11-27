@@ -25,9 +25,7 @@
     <array name="voicesteps">
         <item>순서 소개</item>
         <item>한국어\n목소리 녹음</item>
-        <item>한국어 녹음\n품질 확인</item>
         <item>영어\n목소리 녹음</item>
-        <item>영어 녹음\n품질 확인</item>
     </array>
     <string name="record">녹음 버튼을 누른 후\n천천히 스크립트를 읽어 주세요.</string>
     <string name="krscript">\n\n저, __계정에 등록된 이름__은\n Language Ribbon에 제 목소리를 등록하며,\n이를 통해 제 Language Ribbon 계정에\n제 목소리를 사용할 수 있는 권한을 부여함을 동의합니다.\n %1$s\n\n</string>
