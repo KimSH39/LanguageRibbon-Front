@@ -319,7 +319,7 @@ class VoiceFragment : Fragment() {
             val previousPosition = position - 1
             val buttonText = when (previousPosition) {
                 //FINAL_STEP -> "회원가입"
-                else -> "이전"
+                else -> "다음"
             }
             transitionToStep(previousPosition, buttonText)
         } else {
