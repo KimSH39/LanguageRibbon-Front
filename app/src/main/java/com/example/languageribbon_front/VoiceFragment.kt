@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import com.example.languageribbon_front.MainFragment.Companion.PERMISSION_REQUEST_CODE
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import android.media.audiofx.Visualizer
 
 class VoiceFragment : Fragment() {
     private var _binding: FragmentVoiceBinding? = null
@@ -75,8 +74,8 @@ class VoiceFragment : Fragment() {
             }
         }
 
-        binding.listening1.visibility = View.GONE
-        binding.listening2.visibility = View.GONE
+        binding.reset1.visibility = View.GONE
+        binding.reset2.visibility = View.GONE
 
         binding.record1.setOnClickListener {
             recordButton1ClickCount++
@@ -87,59 +86,50 @@ class VoiceFragment : Fragment() {
                 }
                 recordButton1ClickCount == 2 -> {
                     stopRecording1()
-                    binding.listening1.visibility = View.VISIBLE
+                    binding.reset1.visibility = View.VISIBLE
+                }
+                recordButton1ClickCount % 2 == 1 -> { // odd number
+                    startPlaying1()
+                }
+                recordButton1ClickCount % 2 == 0 -> { // even number
+                    stopPlaying1()
                 }
             }
 
-            if (recordButton1ClickCount > 2) {
+            binding.reset1.setOnClickListener {
+                stopPlaying1()
+                soundVisualizerView1.clearVisualization()
                 recordButton1ClickCount = 0
+                binding.reset1.visibility = View.GONE
+                binding.record1.setImageResource(R.drawable.startbtn)
             }
-
-            updateRecordImage1()
         }
 
         binding.record2.setOnClickListener {
             recordButton2ClickCount++
-
             when {
                 recordButton2ClickCount == 1 -> {
                     startRecording2()
                 }
                 recordButton2ClickCount == 2 -> {
                     stopRecording2()
-                    binding.listening2.visibility = View.VISIBLE
+                    binding.reset2.visibility = View.VISIBLE
                 }
-            }
-
-            if (recordButton2ClickCount > 2) {
-                recordButton2ClickCount = 0
-            }
-            updateRecordImage1()
-        }
-
-        binding.listening1.setOnClickListener {
-            // Play recorded audio
-            if (audioFilePath != null) {
-                if (mediaPlayer == null) {
-                    startPlaying1()
-                } else {
-                    stopPlaying1()
-                }
-            }
-
-            updateListeningImage1()
-        }
-
-        binding.listening2.setOnClickListener {
-            if (audioFilePath != null) {
-                if (mediaPlayer == null) {
+                recordButton2ClickCount % 2 == 1 -> { // odd number
                     startPlaying2()
-                } else {
+                }
+                recordButton2ClickCount % 2 == 0 -> { // even number
                     stopPlaying2()
                 }
             }
 
-            updateListeningImage2()
+            binding.reset2.setOnClickListener {
+                stopPlaying2()
+                soundVisualizerView2.clearVisualization()
+                recordButton2ClickCount = 0
+                binding.reset2.visibility = View.GONE
+                binding.record2.setImageResource(R.drawable.startbtn)
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -162,10 +152,11 @@ class VoiceFragment : Fragment() {
                 setDataSource(audioFilePath)
                 prepare()
                 start()
-                updateListeningImage1()
+                binding.record1.setImageResource(R.drawable.playingbtn)
 
                 setOnCompletionListener {
-                    binding.listening1.setImageResource(R.drawable.playbtn)
+                    binding.record1.setImageResource(R.drawable.playbtn)
+                    recordButton1ClickCount = 3
                 }
 
                 handler.postDelayed(updateSeekBar, 100)
@@ -182,10 +173,11 @@ class VoiceFragment : Fragment() {
                 setDataSource(audioFilePath)
                 prepare()
                 start()
-                updateListeningImage2()
+                binding.record2.setImageResource(R.drawable.playingbtn)
 
                 setOnCompletionListener {
-                    binding.listening2.setImageResource(R.drawable.playbtn)
+                    binding.record2.setImageResource(R.drawable.playbtn)
+                    recordButton2ClickCount = 3
                 }
 
                 handler.postDelayed(updateSeekBar, 100)
@@ -212,7 +204,7 @@ class VoiceFragment : Fragment() {
         mediaPlayer?.apply {
             release()
             mediaPlayer = null
-            updateRecordImage1()
+            binding.record1.setImageResource(R.drawable.playbtn)
             soundVisualizerView1.stopVisualizing()
             handler.removeCallbacks(updateSeekBar)
         }
@@ -222,49 +214,11 @@ class VoiceFragment : Fragment() {
         mediaPlayer?.apply {
             release()
             mediaPlayer = null
-            updateRecordImage2()
+            binding.record2.setImageResource(R.drawable.playbtn)
             soundVisualizerView2.stopVisualizing()
             handler.removeCallbacks(updateSeekBar)
         }
     }
-
-    private fun updateRecordImage1() {
-        val imageResource = if (isRecording) {
-            R.drawable.stopbtn
-        } else {
-            R.drawable.startbtn
-        }
-        binding.record1.setImageResource(imageResource)
-    }
-
-    private fun updateRecordImage2() {
-        val imageResource = if (isRecording) {
-            R.drawable.stopbtn
-        } else {
-            R.drawable.startbtn
-        }
-        binding.record1.setImageResource(imageResource)
-    }
-
-    private fun updateListeningImage1() {
-        val imageResource = if (mediaPlayer != null && mediaPlayer?.isPlaying == true) {
-            R.drawable.playingbtn
-        } else {
-            R.drawable.playbtn
-        }
-        binding.listening1.setImageResource(imageResource)
-    }
-
-    private fun updateListeningImage2() {
-        val imageResource = if (mediaPlayer != null && mediaPlayer?.isPlaying == true) {
-            R.drawable.playingbtn
-        } else {
-            R.drawable.playbtn
-        }
-        binding.listening2.setImageResource(imageResource)
-    }
-
-
     private fun startRecording1() {
         if (checkPermissions()) {
             val fileName = "audio_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
@@ -283,7 +237,7 @@ class VoiceFragment : Fragment() {
                     isRecording = true
                     Toast.makeText(requireContext(), "녹음 시작", Toast.LENGTH_SHORT).show()
 
-                    binding.record1.setBackgroundResource(R.drawable.playingbtn)
+                    binding.record1.setImageResource(R.drawable.stopbtn)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -318,7 +272,7 @@ class VoiceFragment : Fragment() {
                     isRecording = true
                     Toast.makeText(requireContext(), "녹음 시작", Toast.LENGTH_SHORT).show()
 
-                    binding.record2.setBackgroundResource(R.drawable.playingbtn)
+                    binding.record2.setImageResource(R.drawable.playingbtn)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -333,8 +287,6 @@ class VoiceFragment : Fragment() {
             requestPermissions()
         }
     }
-
-
     private fun stopRecording1() {
         mediaRecorder?.apply {
             stop()
@@ -343,12 +295,11 @@ class VoiceFragment : Fragment() {
             isRecording = false
             Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
 
-            binding.record1.setBackgroundResource(R.drawable.playbtn)
+            binding.record1.setImageResource(R.drawable.playbtn)
             soundVisualizerView1.stopVisualizing()
             sendAudioToBackend()
         }
     }
-
     private fun stopRecording2() {
         mediaRecorder?.apply {
             stop()
@@ -357,12 +308,11 @@ class VoiceFragment : Fragment() {
             isRecording = false
             Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
 
-            binding.record2.setBackgroundResource(R.drawable.playbtn)
+            binding.record2.setImageResource(R.drawable.playbtn)
             soundVisualizerView2.stopVisualizing()
             sendAudioToBackend()
         }
     }
-
 
     private fun onBackPressed() {
         if (position > STEP_1) {
@@ -452,5 +402,9 @@ class VoiceFragment : Fragment() {
         binding.enscript.text = enformattedString
         binding.krscript.text = krformattedString
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -171,26 +171,26 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                            <ImageView
+                                android:id="@+id/reset1"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/re_record"
+                                android:layout_alignParentStart="true"/>
 
                             <ImageView
                                 android:id="@+id/record1"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:src="@drawable/startbtn"
-                                android:layout_centerHorizontal="true" />
-
-                            <ImageView
-                                android:id="@+id/listening1"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:src="@drawable/playbtn"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="16dp" />
+                                android:layout_centerHorizontal="true"/>
                         </RelativeLayout>
 
-                    </LinearLayout>
 
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -361,28 +361,26 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                            <ImageView
+                                android:id="@+id/reset2"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/re_record"
+                                android:layout_alignParentStart="true"/>
 
                             <ImageView
                                 android:id="@+id/record2"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:src="@drawable/startbtn"
-                                android:layout_centerHorizontal="true" />
-
-                            <ImageView
-                                android:id="@+id/listening2"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:src="@drawable/playbtn"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="16dp" />
+                                android:layout_centerHorizontal="true"/>
                         </RelativeLayout>
 
+
                     </LinearLayout>
-
-
-
                 </LinearLayout>
 
             </LinearLayout>
