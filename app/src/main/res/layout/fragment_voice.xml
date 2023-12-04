@@ -250,22 +250,22 @@
                     android:layout_height="150sp"
                     android:layout_gravity="center"
                     app:cpv_autoTextSize="true"
-                    app:cpv_barColor="#2196F3"
+                    app:cpv_barColor="#EAEAEA"
                     app:cpv_barWidth="20sp"
                     app:cpv_innerContourSize="0sp"
                     app:cpv_maxValue="100"
                     app:cpv_outerContourSize="0sp"
-                    app:cpv_rimColor="#BBDEFB"
+                    app:cpv_rimColor="#EAEAEA"
                     app:cpv_rimWidth="20sp"
                     app:cpv_showUnit="true"
                     app:cpv_spinColor="#ABF200"
                     app:cpv_textColor="#1976D2"
                     app:cpv_textScale="0.8"
                     app:cpv_unit="%"
-                    app:cpv_unitColor="#BBDEFB"
+                    app:cpv_unitColor="#EAEAEA"
                     app:cpv_unitPosition="right_top"
                     app:cpv_unitScale="0.8"
-                    app:cpv_value="38"/>
+                    app:cpv_value="0"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -442,17 +442,17 @@
                     app:cpv_innerContourSize="0sp"
                     app:cpv_maxValue="100"
                     app:cpv_outerContourSize="0sp"
-                    app:cpv_rimColor="#BBDEFB"
+                    app:cpv_rimColor="#EAEAEA"
                     app:cpv_rimWidth="20sp"
                     app:cpv_showUnit="true"
                     app:cpv_spinColor="#ABF200"
                     app:cpv_textColor="#1976D2"
                     app:cpv_textScale="0.8"
                     app:cpv_unit="%"
-                    app:cpv_unitColor="#BBDEFB"
+                    app:cpv_unitColor="#EAEAEA"
                     app:cpv_unitPosition="right_top"
                     app:cpv_unitScale="0.8"
-                    app:cpv_value="38"/>
+                    app:cpv_value="0"/>
 
                 <TextView
                     android:layout_width="wrap_content"

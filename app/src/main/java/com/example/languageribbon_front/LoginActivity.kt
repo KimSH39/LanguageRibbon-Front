@@ -3,19 +3,32 @@ package com.example.languageribbon_front
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import com.example.languageribbon_front.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.*
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    var isExistBlank = false
+    // 앱 상태(로그인 여부) 저장 : 앱 내부 초기 값 설정
+    private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -42,7 +55,49 @@ class LoginActivity : AppCompatActivity() {
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 버튼 클릭했을 때 로그인
+        //로그인 버튼을 클릭했을떄
+        binding.login.setOnClickListener {
+            if (binding.id.text.isEmpty() || binding.password.text.isEmpty()) {
+                isExistBlank = true
+                Toast.makeText(this, "로그인 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
+            }else {
+                try {
+                    sharedPreferences.edit {
+                        putBoolean("login", true)
+                    }
+
+                    Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                    val id = binding.id.text.toString()
+                    val pw = binding.password.text.toString()
+
+                    // 유저가 입력한 id, pw를 쉐어드에 저장한다.
+                    val sharedPreference = getSharedPreferences("Account", Context.MODE_PRIVATE)
+                    val editor = sharedPreference.edit()
+                    editor.putString("id", id)
+                    editor.putString("pw", pw)
+                    editor.apply()
+                    Log.d("Login","$id, $pw")
+
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val result = performLogin(id, pw)
+                        // UI 업데이트 작업 등을 여기에 추가할 수 있습니다.
+                        if (result != null) {
+                            runOnUiThread {
+                                //로그인 성공 시 메인 화면으로 이동
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.i("DBtest", ".....ERROR.....!")
+                }
+            }
+        }
+
+        // 카카오 로그인 버튼 클릭했을 때 로그인
         with(binding) {
             kakaobtn.setOnClickListener {
 
@@ -79,4 +134,57 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+    private suspend fun performLogin(id: String, pw: String): String? {
+        try {
+            var str: String
+
+            Log.d("TestRegisterActivity", "Inside performLogin - Start")
+
+            val url = URL("http://ec2-18-221-231-79.us-east-2.compute.amazonaws.com:8000/login")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+            conn.requestMethod = "POST"
+            Log.d("TestRegisterActivity", "URL connection established")
+
+            val osw: OutputStream = conn.outputStream
+            val writer = BufferedWriter(OutputStreamWriter(osw, "UTF-8"))
+
+            Log.d("TestRegisterActivity", "HTTP connection setup")
+
+            val sendMsg = "username=$id&password=$pw"
+
+            writer.write(sendMsg)
+            writer.flush()
+
+            Log.d("TestRegisterActivity", "Data sent to server")
+
+            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                val tmp = InputStreamReader(conn.inputStream, "UTF-8")
+                val reader = BufferedReader(tmp)
+                val buffer = StringBuffer()
+
+                var str: String? = null
+                while (reader.readLine().also { str = it } != null) {
+                    str?.let {
+                        buffer.append(it)
+                    }
+                }
+                val receiveMsg = buffer.toString()
+
+                Log.i("TestRegisterActivity", "Data received from server: $receiveMsg")
+                return receiveMsg
+            } else {
+                Log.i("TestRegisterActivity", "HTTP connection failed with response code: ${conn.responseCode}")
+            }
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.e("TestRegisterActivity", "IOException: ${e.message}")
+            Log.e("TestRegisterActivity", "IOException: $e")
+        }
+
+        return null
+    }
+
 }

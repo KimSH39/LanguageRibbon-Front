@@ -43,7 +43,7 @@
             android:layout_gravity="center">
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
