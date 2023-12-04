@@ -19,10 +19,12 @@ import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.nio.charset.StandardCharsets
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -44,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
         } else if (token != null) {
             Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
             // 로그인 -> 메인
+            sharedPreferences.edit {
+                putBoolean("login", true)
+            }
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
@@ -54,6 +59,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // login false로 지정
+        sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
+        val login = sharedPreferences.getBoolean("login", false)
 
         //로그인 버튼을 클릭했을떄
         binding.login.setOnClickListener {
@@ -92,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Log.i("DBtest", ".....ERROR.....!")
+                    Log.i("DBtest", "${e.message}")
                 }
             }
         }
@@ -136,27 +145,22 @@ class LoginActivity : AppCompatActivity() {
     }
     private suspend fun performLogin(id: String, pw: String): String? {
         try {
-            var str: String
-
             Log.d("TestRegisterActivity", "Inside performLogin - Start")
 
-            val url = URL("http://ec2-18-221-231-79.us-east-2.compute.amazonaws.com:8000/login")
+            val url = URL("http://ec2-18-221-231-79.us-east-2.compute.amazonaws.com:8000/login/")
             val conn = url.openConnection() as HttpURLConnection
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
             conn.requestMethod = "POST"
-            Log.d("TestRegisterActivity", "URL connection established")
+            conn.doOutput = true  // Enable output for the POST request
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
 
-            val osw: OutputStream = conn.outputStream
-            val writer = BufferedWriter(OutputStreamWriter(osw, "UTF-8"))
+            val params = "username=$id&password=$pw"
+            val postData = params.toByteArray(StandardCharsets.UTF_8)
 
-            Log.d("TestRegisterActivity", "HTTP connection setup")
+            conn.outputStream.use { os ->
+                os.write(postData)
+            }
 
-            val sendMsg = "username=$id&password=$pw"
-
-            writer.write(sendMsg)
-            writer.flush()
-
-            Log.d("TestRegisterActivity", "Data sent to server")
+            Log.d("Login", "Data sent to server")
 
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
                 val tmp = InputStreamReader(conn.inputStream, "UTF-8")
@@ -171,20 +175,39 @@ class LoginActivity : AppCompatActivity() {
                 }
                 val receiveMsg = buffer.toString()
 
-                Log.i("TestRegisterActivity", "Data received from server: $receiveMsg")
+                Log.d("Login", "Data received from server: $receiveMsg")
+
+                // Parse the JSON data
+                val jsonData = JSONObject(receiveMsg)
+
+                // Extract values from JSON
+                val voiceInfoEn = jsonData.optBoolean("voice_info_en", false)
+                val voiceInfoKr = jsonData.optBoolean("voice_info_kr", false)
+                val name = jsonData.optString("name", "")
+
+                // Save values to SharedPreferences
+                val sharedPreference = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+                val editor = sharedPreference.edit()
+                editor.putBoolean("voiceKr", voiceInfoEn)
+                editor.putBoolean("voiceEn", voiceInfoKr)
+                editor.putString("name", name)
+                editor.apply()
+
                 return receiveMsg
             } else {
-                Log.i("TestRegisterActivity", "HTTP connection failed with response code: ${conn.responseCode}")
+                Log.d("login", "HTTP connection failed with response code: ${conn.responseCode}")
             }
         } catch (e: MalformedURLException) {
             e.printStackTrace()
+            Log.e("Login", "MalformedURLException: ${e.message}")
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.e("TestRegisterActivity", "IOException: ${e.message}")
-            Log.e("TestRegisterActivity", "IOException: $e")
+            Log.e("Login", "IOException: ${e.message}")
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("Login", "Exception: ${e.message}")
         }
 
         return null
     }
-
 }
