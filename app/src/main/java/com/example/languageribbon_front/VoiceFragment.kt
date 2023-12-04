@@ -1,10 +1,15 @@
 package com.example.languageribbon_front
 
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +26,11 @@ import okhttp3.MultipartBody
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.example.languageribbon_front.MainFragment.Companion.PERMISSION_REQUEST_CODE
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
 class VoiceFragment : Fragment() {
@@ -67,8 +77,10 @@ class VoiceFragment : Fragment() {
         binding.button.setOnClickListener {
             when (position) {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
-                STEP_2 -> transitionToStep(STEP_3, "다음")
-                STEP_3 -> transitionToStep(STEP_4, "다음")
+                STEP_2 -> {transitionToStep(STEP_3, "다음")
+                    KrsendAudioToBackend()}
+                STEP_3 -> {transitionToStep(STEP_4, "다음")
+                    EnsendAudioToBackend()}
                 STEP_4 -> transitionToStep(STEP_5, "초기 목소리 설정 완료")
                 else -> {navigateToMainFragment()}
             }
@@ -221,7 +233,7 @@ class VoiceFragment : Fragment() {
     }
     private fun startRecording1() {
         if (checkPermissions()) {
-            val fileName = "audio_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
+            val fileName = "KR_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
             audioFilePath = "${requireContext().externalCacheDir?.absolutePath}/$fileName"
 
             mediaRecorder = MediaRecorder().apply {
@@ -235,8 +247,6 @@ class VoiceFragment : Fragment() {
                     prepare()
                     start()
                     isRecording = true
-                    Toast.makeText(requireContext(), "녹음 시작", Toast.LENGTH_SHORT).show()
-
                     binding.record1.setImageResource(R.drawable.stopbtn)
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -256,7 +266,7 @@ class VoiceFragment : Fragment() {
 
     private fun startRecording2() {
         if (checkPermissions()) {
-            val fileName = "audio_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
+            val fileName = "EN_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.wav"
             audioFilePath = "${requireContext().externalCacheDir?.absolutePath}/$fileName"
 
             mediaRecorder = MediaRecorder().apply {
@@ -293,11 +303,8 @@ class VoiceFragment : Fragment() {
             reset()
             release()
             isRecording = false
-            Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
-
             binding.record1.setImageResource(R.drawable.playbtn)
             soundVisualizerView1.stopVisualizing()
-            sendAudioToBackend()
         }
     }
     private fun stopRecording2() {
@@ -306,11 +313,8 @@ class VoiceFragment : Fragment() {
             reset()
             release()
             isRecording = false
-            Toast.makeText(requireContext(), "녹음 종료", Toast.LENGTH_SHORT).show()
-
             binding.record2.setImageResource(R.drawable.playbtn)
             soundVisualizerView2.stopVisualizing()
-            sendAudioToBackend()
         }
     }
 
@@ -340,30 +344,182 @@ class VoiceFragment : Fragment() {
         requestPermissions(permissions, PERMISSION_REQUEST_CODE)
     }
 
-
-    private fun sendAudioToBackend() {
-        audioFilePath?.let { filePath ->
-            val audioFile = File(filePath)
-            if (audioFile.exists()) {
-                val audioRequestBody = audioFile.asRequestBody("audio/*".toMediaTypeOrNull())
-                val audioPart = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
-
-//                // Replace the following with your actual API call
-//                val apiService = RetrofitClient.createService(ApiService::class.java)
-//                val call = apiService.uploadAudioFile(audioPart)
-//                call.enqueue(object : Callback<YourResponseClass> {
-//                    override fun onResponse(call: Call<YourResponseClass>, response: Response<YourResponseClass>) {
-//                        // Handle success
-//                        Toast.makeText(requireContext(), "Audio sent to backend", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                    override fun onFailure(call: Call<YourResponseClass>, t: Throwable) {
-//                        // Handle failure
-//                        Toast.makeText(requireContext(), "Failed to send audio", Toast.LENGTH_SHORT).show()
-//                    }
-//                })
-            }
+    private fun KrsendAudioToBackend() {
+        // Check if the audioFilePath is not null or empty
+        if (audioFilePath.isNullOrEmpty()) {
+            Log.e("FilePathError", "Audio file path is null or empty")
+            Toast.makeText(requireContext(), "오디오 파일 경로가 잘못되었습니다", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val filePathMessage = "Audio File Path: ${audioFilePath ?: "Not available"}"
+        Toast.makeText(requireContext(), filePathMessage, Toast.LENGTH_SHORT).show()
+        Log.d("UploadAudio", "$audioFilePath")
+
+        val audioFile = File(audioFilePath)
+
+        if (!audioFile.exists()) {
+            Log.e("FileNotExist", "Audio file does not exist at path: $audioFilePath")
+            Toast.makeText(requireContext(), "오디오 파일이 존재하지 않습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!isNetworkConnected()) {
+            Toast.makeText(requireContext(), "인터넷 연결이 없습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val audioRequestBody = audioFile.asRequestBody("audio/*".toMediaTypeOrNull())
+        val audioPart = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
+        val langPart = MultipartBody.Part.createFormData("lang", "kr")
+
+        val apiService = RetrofitClient.createService(MyApi::class.java)
+        val call = apiService.uploadAudioFile(audioPart, langPart)
+
+        call.enqueue(object : Callback<ServerResponse> {
+            override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
+                val serverResponse = response.body()
+
+                if (serverResponse != null) {
+                    if (serverResponse.uploadSuccess == true) {
+                        Log.d("UploadAudio", "Response: ${serverResponse.message}")
+                        val metric = serverResponse.metric
+                        if (metric != null) {
+                            Log.d("UploadAudio", "Metric 한국어 cer: ${metric.cer}")
+
+                            val cerValue = metric.cer
+                            val cerPercentage = 100 - (cerValue * 100)
+                            when {
+                                cerValue >= 0.0 && cerValue < 0.2 -> {
+                                    binding.krCER.setValueAnimated(
+                                        cerPercentage.toFloat(),
+                                        1000
+                                    )
+                                    binding.krCER.setBarColor(Color.parseColor("#4198FF"))
+                                }
+                                cerValue >= 0.2 && cerValue < 0.3 -> {
+                                    binding.krCER.setValueAnimated(cerPercentage.toFloat(), 1000)
+                                    binding.krCER.setBarColor(Color.parseColor("#FFD541"))
+                                }
+                                cerValue >= 0.3 -> {
+                                    binding.krCER.setValueAnimated(cerPercentage.toFloat(), 1000)
+                                    binding.krCER.setBarColor(Color.RED)
+                                }
+                                else -> {
+                                    binding.krCER.setValueAnimated(0f, 1000)
+                                    binding.krCER.setBarColor(Color.GRAY)
+                                }
+                            }
+
+                        } else {
+                            Log.d("UploadAudio", "Metric is null")
+                        }
+                    } else {
+                        Log.e("UploadError", "Server response indicates failure: ${serverResponse.message}")
+                    }
+                } else {
+                    Log.e("UploadError", "Null response from server")
+                    Toast.makeText(requireContext(), "서버 응답이 없습니다", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
+                Log.e("UploadError", "Failed to upload audio", t)
+                Toast.makeText(requireContext(), "오디오 전송에 실패했습니다", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    // 네트워크 에러 확인
+    private fun isNetworkConnected(): Boolean {
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return networkInfo?.isConnected == true
+    }
+
+    private fun EnsendAudioToBackend() {
+        if (audioFilePath.isNullOrEmpty()) {
+            Log.e("FilePathError", "Audio file path is null or empty")
+            Toast.makeText(requireContext(), "오디오 파일 경로가 잘못되었습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val filePathMessage = "Audio File Path: ${audioFilePath ?: "Not available"}"
+        Toast.makeText(requireContext(), filePathMessage, Toast.LENGTH_SHORT).show()
+        Log.d("UploadAudio", "$audioFilePath")
+
+        val audioFile = File(audioFilePath)
+
+        if (!audioFile.exists()) {
+            Log.e("FileNotExist", "Audio file does not exist at path: $audioFilePath")
+            Toast.makeText(requireContext(), "오디오 파일이 존재하지 않습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!isNetworkConnected()) {
+            Toast.makeText(requireContext(), "인터넷 연결이 없습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val audioRequestBody = audioFile.asRequestBody("audio/*".toMediaTypeOrNull())
+        val audioPart = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
+        val langPart = MultipartBody.Part.createFormData("lang", "en")
+
+        val apiService = RetrofitClient.createService(MyApi::class.java)
+        val call = apiService.uploadAudioFile(audioPart, langPart)
+
+        call.enqueue(object : Callback<ServerResponse> {
+            override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
+                val serverResponse = response.body()
+
+                if (serverResponse != null) {
+                    if (serverResponse.uploadSuccess == true) {
+                        Log.d("UploadAudio", "Response: ${serverResponse.message}")
+                        val metric = serverResponse.metric
+                        if (metric != null) {
+                            Log.d("UploadAudio", "Metric 영어 cer: ${metric.cer}")
+                            val cerValue = metric.cer
+                            val cerPercentage = 100 - (cerValue * 100)
+                            when {
+                                cerValue >= 0.0 && cerValue < 0.2 -> {
+                                    binding.enCER.setValueAnimated(
+                                        cerPercentage.toFloat(),
+                                        1000
+                                    )
+                                    binding.enCER.setBarColor(Color.parseColor("#4198FF"))
+                                }
+                                cerValue >= 0.2 && cerValue < 0.3 -> {
+                                    binding.enCER.setValueAnimated(cerPercentage.toFloat(), 1000)
+                                    binding.enCER.setBarColor(Color.parseColor("#FFD541"))
+                                }
+                                cerValue >= 0.3 -> {
+                                    binding.enCER.setValueAnimated(cerPercentage.toFloat(), 1000)
+                                    binding.enCER.setBarColor(Color.RED)
+                                }
+                                else -> {
+                                    binding.enCER.setValueAnimated(0f, 1000)
+                                    binding.enCER.setBarColor(Color.GRAY)
+                                }
+                            }
+
+                        } else {
+                            Log.d("UploadAudio", "Metric is null")
+                        }
+                    } else {
+                        Log.e("UploadError", "Server response indicates failure: ${serverResponse.message}")
+                    }
+                } else {
+                    // Handle null response
+                    Log.e("UploadError", "Null response from server")
+                    Toast.makeText(requireContext(), "서버 응답이 없습니다", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
+                Log.e("UploadError", "Failed to upload audio", t)
+                Toast.makeText(requireContext(), "오디오 전송에 실패했습니다", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun transitionToStep(nextPosition: Int, buttonText: String) {
