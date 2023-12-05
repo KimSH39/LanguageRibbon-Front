@@ -105,12 +105,13 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="이름"
                     style="@style/customTextViewFontStyle"
                     android:padding="10dp"
+                    android:layout_marginBottom="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -191,6 +192,16 @@
                         style="@style/customTextViewFontStyle"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
+
+                <Button
+                    android:id="@+id/tologinbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:text="로그인"
+                    android:textColor="#ADADAD"
+                    android:onClick="onClickHandler"/>
 
             </LinearLayout>
 

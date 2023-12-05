@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -47,12 +48,11 @@ class SignupActivity : AppCompatActivity() {
 
 
         binding.stepView.done(false)
-//        binding.tologinpbtn.setOnClickListener{
-//            finish()
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//            overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
-//        }
+        binding.tologinbtn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
+        }
 
         binding.button.setOnClickListener {
             when (position) {
@@ -70,6 +70,17 @@ class SignupActivity : AppCompatActivity() {
                     val name = binding.name.text.toString()
                     val passwordCheck = binding.passwordCheck.text.toString()
                     val genderRadioGroup = findViewById<RadioGroup>(R.id.gender)
+                    val selectedRadioButtonId = genderRadioGroup.checkedRadioButtonId
+
+                    if (selectedRadioButtonId != -1) {
+                        val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
+                        val selectedGender = selectedRadioButton.text.toString()
+
+                        // Now you can use the selectedGender as needed
+                    } else {
+                        // No RadioButton is selected, show an error or handle it as appropriate
+                    }
+
 
                     // 유저가 항목을 다 채우지 않았을 경우
                     if (email.isEmpty() && password.isEmpty() && name.isEmpty() && passwordCheck.isEmpty()
