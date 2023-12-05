@@ -1,5 +1,7 @@
 package com.example.languageribbon_front
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +26,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // isFirstTime이랑 LoginActivity의 login랑은 반대임
+        // isFirstTime가 login받은 거니까 false일 때 동의한 거
+        val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE) // 앱 자체에 데이터 저장
+        val isFirstTime = sharedPreferences.getBoolean("login", false)
+        if (!isFirstTime) {
+            finish()
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
+        }
 
         mainfragment=MainFragment()
         versionfragment=VersionFragment()
