@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
             }
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
             overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
         }
     }
@@ -74,8 +75,6 @@ class LoginActivity : AppCompatActivity() {
                     sharedPreferences.edit {
                         putBoolean("login", true)
                     }
-
-                    Toast.makeText(this@LoginActivity, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
                     val id = binding.id.text.toString()
                     val pw = binding.password.text.toString()
 
@@ -93,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         if (result != null) {
                             runOnUiThread {
                                 //로그인 성공 시 메인 화면으로 이동
+                                Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
@@ -147,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
         try {
             Log.d("TestRegisterActivity", "Inside performLogin - Start")
 
-            val url = URL("http://ec2-18-221-231-79.us-east-2.compute.amazonaws.com:8000/login/")
+            val url = URL("http://ec2-3-12-247-228.us-east-2.compute.amazonaws.com:8000/login/")
             val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
             conn.doOutput = true  // Enable output for the POST request
@@ -186,8 +186,9 @@ class LoginActivity : AppCompatActivity() {
                 val name = jsonData.optString("name", "")
 
                 // Save values to SharedPreferences
-                val sharedPreference = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+                val sharedPreference = getSharedPreferences("Login", Context.MODE_PRIVATE)
                 val editor = sharedPreference.edit()
+                editor.putBoolean("login", true)
                 editor.putBoolean("voiceKr", voiceInfoEn)
                 editor.putBoolean("voiceEn", voiceInfoKr)
                 editor.putString("name", name)
@@ -206,6 +207,11 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e("Login", "Exception: ${e.message}")
+        }finally {
+            // Display toast message for login failure
+            runOnUiThread {
+                Toast.makeText(this@LoginActivity, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return null
