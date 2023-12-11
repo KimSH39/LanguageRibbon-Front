@@ -40,21 +40,21 @@ class LoginActivity : AppCompatActivity() {
     // 카카오 로그인
     // 카카오계정으로 로그인 공통 callback 구성
     // 카카오톡으로 로그인 할 수 없어 카카오계정으로 로그인할 경우 사용됨
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Log.e(TAG, "카카오계정으로 로그인 실패", error)
-        } else if (token != null) {
-            Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-            // 로그인 -> 메인
-            sharedPreferences.edit {
-                putBoolean("login", true)
-            }
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-            overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
-        }
-    }
+//    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+//        if (error != null) {
+//            Log.e(TAG, "카카오계정으로 로그인 실패", error)
+//        } else if (token != null) {
+//            Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+//            // 로그인 -> 메인
+//            sharedPreferences.edit {
+//                putBoolean("login", true)
+//            }
+//            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//            overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                                 finish()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.putExtra("userId", id)
                                 startActivity(intent)
                                 overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
                             }
