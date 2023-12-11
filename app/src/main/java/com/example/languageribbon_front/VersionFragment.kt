@@ -22,19 +22,5 @@ class VersionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.login.setOnClickListener{
-            activity?.let{
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        binding.signup.setOnClickListener{
-            activity?.let{
-                val intent = Intent(context, SignupActivity::class.java)
-                startActivity(intent)
-            }
-        }
     }
 }

@@ -17,7 +17,7 @@
             android:id="@+id/logolayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -46,7 +46,7 @@
                 android:id="@+id/id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_btn_gray"
                 android:hint="Language Ribbon 이메일 입력"
                 style="@style/customTextViewFontStyle"
@@ -61,7 +61,7 @@
                 android:background="@drawable/rounded_btn_gray"
                 style="@style/customTextViewFontStyle"
                 android:padding="10dp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="15dp"/>
 
             <Button
                 android:id="@+id/login"
@@ -72,14 +72,14 @@
                 android:background="@drawable/rounded_btn"
                 android:textColor="@color/white"
                 app:backgroundTint="#1554F6"/>
-            <ImageView
-                android:id="@+id/kakaobtn"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/kakao_login_medium_wide"
-                android:layout_marginBottom="30dp"
-                />
+<!--            <ImageView-->
+<!--                android:id="@+id/kakaobtn"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/kakao_login_medium_wide"-->
+<!--                android:layout_marginBottom="30dp"-->
+<!--                />-->
 
         </LinearLayout>
 

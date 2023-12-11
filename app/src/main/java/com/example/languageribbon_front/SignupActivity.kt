@@ -33,7 +33,6 @@ class SignupActivity : AppCompatActivity() {
         private const val STEP_1 = 0
         private const val STEP_2 = 1
         private const val STEP_3 = 2
-        private const val FINAL_STEP = 3
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,8 +52,7 @@ class SignupActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             when (position) {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
-                STEP_2 -> transitionToStep(STEP_3, "다음")
-                STEP_3 -> transitionToStep(FINAL_STEP, "회원가입")
+                STEP_2 -> transitionToStep(STEP_3, "회원가입")
                 else -> {
 
                     var isExistBlank = false
@@ -150,6 +148,9 @@ class SignupActivity : AppCompatActivity() {
                                     startActivity(intent)
                                     overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
                                 }
+                            }else {
+                                // Signup failed, display the appropriate dialog
+                                dialog("blank")
                             }
                         }
                     }
@@ -237,8 +238,7 @@ class SignupActivity : AppCompatActivity() {
         when (position) {
             STEP_1 -> super.onBackPressed()
             STEP_2 -> transitionToStep(STEP_1, "Next")
-            STEP_3 -> transitionToStep(STEP_2, "Next")
-            else -> transitionToStep(STEP_3, "Next")
+            else -> transitionToStep(STEP_2, "Next")
         }
     }
 
@@ -247,7 +247,6 @@ class SignupActivity : AppCompatActivity() {
             STEP_1 -> binding.STEP1.visibility = View.GONE
             STEP_2 -> binding.STEP2.visibility = View.GONE
             STEP_3 -> binding.STEP3.visibility = View.GONE
-            FINAL_STEP -> binding.FINALSTEP.visibility = View.GONE
         }
         position = nextPosition
         binding.stepView.done(false)
@@ -257,7 +256,6 @@ class SignupActivity : AppCompatActivity() {
             STEP_1 -> binding.STEP1.visibility = View.VISIBLE
             STEP_2 -> binding.STEP2.visibility = View.VISIBLE
             STEP_3 -> binding.STEP3.visibility = View.VISIBLE
-            FINAL_STEP -> binding.FINALSTEP.visibility = View.VISIBLE
         }
     }
 
