@@ -29,25 +29,27 @@ class MainActivity : AppCompatActivity() {
 
         // isFirstTime이랑 LoginActivity의 login랑은 반대임
         // isFirstTime가 login받은 거니까 false일 때 동의한 거
-        val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE) // 앱 자체에 데이터 저장
-        val isFirstTime = sharedPreferences.getBoolean("login", false)
-        if (!isFirstTime) {
+        val sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE) // 앱 자체에 데이터 저장
+        val isFirstTime = sharedPreferences.getBoolean("login", false) // Corrected to use true as the default value
+
+        if (!isFirstTime) { // Changed to check if it's the first time
             finish()
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
-        }
+        } else {
+            // Continue with the rest of your onCreate logic
+            mainfragment = MainFragment()
+            versionfragment = VersionFragment()
+            ratingfragment = RatingFragment()
+            voicefragment = VoiceFragment()
+            guidfragment = GuidFragment()
 
-        mainfragment=MainFragment()
-        versionfragment=VersionFragment()
-        ratingfragment=RatingFragment()
-        voicefragment=VoiceFragment()
-        guidfragment=GuidFragment()
+            settingSideNavBar()
 
-        settingSideNavBar()
-
-        if (savedInstanceState == null) {
-            replaceFragment(MainFragment())
+            if (savedInstanceState == null) {
+                replaceFragment(MainFragment())
+            }
         }
     }
 
@@ -77,18 +79,23 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.main -> {
                     replaceFragment(mainfragment)
+                    finishOtherFragments(mainfragment)
                 }
                 R.id.voice -> {
                     replaceFragment(voicefragment)
+                    finishOtherFragments(voicefragment)
                 }
                 R.id.guid -> {
                     replaceFragment(guidfragment)
+                    finishOtherFragments(guidfragment)
                 }
                 R.id.version -> {
                     replaceFragment(versionfragment)
+                    finishOtherFragments(versionfragment)
                 }
                 R.id.rating -> {
                     replaceFragment(ratingfragment)
+                    finishOtherFragments(ratingfragment)
                 }
             }
 
@@ -96,6 +103,17 @@ class MainActivity : AppCompatActivity() {
             drawer.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    fun finishOtherFragments(currentFragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragments = fragmentManager.fragments
+        for (fragment in fragments) {
+            if (fragment != currentFragment) {
+                    fragmentManager.beginTransaction().remove(fragment).commit()
+            }
+        }
+
     }
     override fun onBackPressed() {
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
