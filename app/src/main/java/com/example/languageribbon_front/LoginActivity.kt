@@ -93,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
                             runOnUiThread {
                                 //로그인 성공 시 메인 화면으로 이동
                                 Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                                finish()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
@@ -207,11 +208,6 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e("Login", "Exception: ${e.message}")
-        }finally {
-            // Display toast message for login failure
-            runOnUiThread {
-                Toast.makeText(this@LoginActivity, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-            }
         }
 
         return null
