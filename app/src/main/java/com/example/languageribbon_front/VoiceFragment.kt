@@ -79,9 +79,9 @@ class VoiceFragment : Fragment() {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
                 STEP_2 -> {transitionToStep(STEP_3, "다음")
                     KrsendAudioToBackend()}
-                STEP_3 -> {transitionToStep(STEP_4, "다음")
+                STEP_3 -> transitionToStep(STEP_4, "다음")
+                STEP_4 -> {transitionToStep(STEP_5, "초기 목소리 설정 완료")
                     EnsendAudioToBackend()}
-                STEP_4 -> transitionToStep(STEP_5, "초기 목소리 설정 완료")
                 else -> {navigateToMainFragment()}
             }
         }
@@ -353,7 +353,6 @@ class VoiceFragment : Fragment() {
         }
 
         val filePathMessage = "Audio File Path: ${audioFilePath ?: "Not available"}"
-        Toast.makeText(requireContext(), filePathMessage, Toast.LENGTH_SHORT).show()
         Log.d("UploadAudio", "$audioFilePath")
 
         val audioFile = File(audioFilePath)
@@ -445,7 +444,6 @@ class VoiceFragment : Fragment() {
         }
 
         val filePathMessage = "Audio File Path: ${audioFilePath ?: "Not available"}"
-        Toast.makeText(requireContext(), filePathMessage, Toast.LENGTH_SHORT).show()
         Log.d("UploadAudio", "$audioFilePath")
 
         val audioFile = File(audioFilePath)
