@@ -22,10 +22,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ratingfragment: RatingFragment
     private lateinit var guidfragment: GuidFragment
     private lateinit var voicefragment: VoiceFragment
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        userId = intent.getStringExtra("userId")
 
         // isFirstTime이랑 LoginActivity의 login랑은 반대임
         // isFirstTime가 login받은 거니까 false일 때 동의한 거
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             settingSideNavBar()
 
             if (savedInstanceState == null) {
-                replaceFragment(MainFragment())
+                replaceFragment(mainfragment, userId)
             }
         }
     }
@@ -78,23 +80,23 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.main -> {
-                    replaceFragment(mainfragment)
+                    replaceFragment(mainfragment, userId)
                     finishOtherFragments(mainfragment)
                 }
                 R.id.voice -> {
-                    replaceFragment(voicefragment)
+                    replaceFragment(voicefragment, userId)
                     finishOtherFragments(voicefragment)
                 }
                 R.id.guid -> {
-                    replaceFragment(guidfragment)
+                    replaceFragment(guidfragment, userId)
                     finishOtherFragments(guidfragment)
                 }
                 R.id.version -> {
-                    replaceFragment(versionfragment)
+                    replaceFragment(versionfragment, userId)
                     finishOtherFragments(versionfragment)
                 }
                 R.id.rating -> {
-                    replaceFragment(ratingfragment)
+                    replaceFragment(ratingfragment, userId)
                     finishOtherFragments(ratingfragment)
                 }
             }
@@ -123,7 +125,10 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, userId: String?) {
+        val bundle = Bundle()
+        bundle.putString("userId", userId)
+        fragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 }

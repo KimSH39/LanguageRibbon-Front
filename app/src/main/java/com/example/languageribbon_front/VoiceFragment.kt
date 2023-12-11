@@ -65,6 +65,7 @@ class VoiceFragment : Fragment() {
 
     ): View? {
         _binding = FragmentVoiceBinding.inflate(inflater, container, false)
+        val userId = arguments?.getString("userId")
         return binding.root
     }
 
