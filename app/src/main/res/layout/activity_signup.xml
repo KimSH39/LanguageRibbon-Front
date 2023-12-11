@@ -181,6 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="남성"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"
                         android:layout_marginRight="20dp"/>
 
@@ -188,6 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="여성"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
                 </RadioGroup>
 
@@ -269,6 +271,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="학생"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
                     <RadioButton android:id="@+id/salary"
@@ -276,6 +279,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="직장인"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
                     <RadioButton android:id="@+id/etc"
@@ -283,6 +287,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="기타"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
                 </RadioGroup>
 
@@ -305,6 +310,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="상"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
                     <RadioButton android:id="@+id/mid"
@@ -312,6 +318,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="중"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
                     <RadioButton android:id="@+id/low"
@@ -319,6 +326,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="하"
+                        android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
                 </RadioGroup>
 
