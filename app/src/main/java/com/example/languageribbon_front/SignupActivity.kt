@@ -56,6 +56,7 @@ class SignupActivity : AppCompatActivity() {
                 else -> {
 
                     var isExistBlank = false
+                    var isAgree = false
                     var studentNumCorrect = true
                     var emailCorrect = true
                     var passwordCorrect = false
@@ -79,8 +80,7 @@ class SignupActivity : AppCompatActivity() {
                     val selectedgenderRadioButton = findViewById<RadioButton>(selectedgenderRadioButtonId)
                     val selectedGender = selectedgenderRadioButton.text.toString()
                     Log.d("선택된 성별", selectedGender);
-                    val sex = if (selectedGender == "남성") 1 else 2
-
+                    val sex = if (selectedGender == "남성") 1 else if (selectedGender == "여성") 2 else 0
 
                     val jobRadioGroup = findViewById<RadioGroup>(R.id.job)
                     val selectedjobRadioButtonId = jobRadioGroup.checkedRadioButtonId
@@ -117,12 +117,14 @@ class SignupActivity : AppCompatActivity() {
                         }
                     }
 
-                    val Agree = binding.agreeAll.isChecked
+                    if(!binding.agreeAll.isChecked){
+                        isAgree = false
+                    } else {
+                        isAgree = true
+                    }
 
                     // 유저가 항목을 다 채우지 않았을 경우
-                    if (name.isEmpty() && email.isEmpty() && password.isEmpty() && name.isEmpty() && passwordCheck.isEmpty()
-                        && genderRadioGroup.checkedRadioButtonId != -1 && jobRadioGroup.checkedRadioButtonId != -1
-                        && levelRadioGroup.checkedRadioButtonId != -1 && age != "연령대 입력") {
+                    if (name.isEmpty() && email.isEmpty() && password.isEmpty() && passwordCheck.isEmpty()) {
                         isExistBlank = true
                     }
 
@@ -135,7 +137,7 @@ class SignupActivity : AppCompatActivity() {
                         passwordCorrect = true
                     }
 
-                    if (!isExistBlank && emailCorrect && studentNumCorrect && Agree && passwordCorrect) {
+                    if (!isExistBlank && emailCorrect && studentNumCorrect && isAgree && passwordCorrect) {
                         // 회원가입 성공 토스트 메세지 띄우기
                         Log.d("Signup","$email, $name, $password, $ageIndex, $job, $sex, $level")
                         GlobalScope.launch(Dispatchers.IO) {
@@ -165,7 +167,7 @@ class SignupActivity : AppCompatActivity() {
                         else if(!passwordCorrect){ // 입력한 비밀번호가 다를 경우
                             dialog("passwordCorrect")
                         }
-                        else if(!Agree){ // 이용약관 동의 안한 경우
+                        else if(!isAgree){ // 이용약관 동의 안한 경우
                             dialog("Agree")
                         }
                     }

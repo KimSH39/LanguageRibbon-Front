@@ -181,6 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="남성"
+                        android:checked="true"
                         android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"
                         android:layout_marginRight="20dp"/>
@@ -271,6 +272,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="학생"
+                        android:checked="true"
                         android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
@@ -310,6 +312,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="상"
+                        android:checked="true"
                         android:buttonTint="#1554F6"
                         style="@style/customTextViewFontStyle"/>
 
