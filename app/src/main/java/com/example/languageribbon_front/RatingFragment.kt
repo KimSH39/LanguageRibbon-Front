@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.languageribbon_front.databinding.FragmentRatingBinding
 
 class RatingFragment : Fragment() {
@@ -30,6 +31,16 @@ class RatingFragment : Fragment() {
             }else{
             ratingment.text="Language Ribbon이 마음에 드셨군요! 감사합니다!"
             }
+        }
+
+        binding.ratingbtn.setOnClickListener{
+            // EditText를 리셋
+            binding.ratingcomment.setText("")
+
+            // RatingBar를 리셋
+            binding.ratingBar.setRating(0f)
+
+            Toast.makeText(requireContext() , "평가가 제출되었습니다!", Toast.LENGTH_SHORT).show()
 
         }
     }

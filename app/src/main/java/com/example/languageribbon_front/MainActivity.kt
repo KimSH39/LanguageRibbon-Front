@@ -152,13 +152,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-
-
-
-//                R.id.rating -> {
-//                    replaceFragment(ratingfragment, userId)
-//                    finishOtherFragments(ratingfragment)
-//                }
+                R.id.rating -> {
+                    replaceFragment(ratingfragment, userId)
+                    finishOtherFragments(ratingfragment)
+                }
             }
 
             val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)

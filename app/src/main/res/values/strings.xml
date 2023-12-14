@@ -27,15 +27,15 @@
         <item>영어\n목소리 녹음</item>
     </array>
     <string name="record">녹음 버튼을 누른 후\n천천히 스크립트를 읽어 주세요.</string>
-    <string name="krscript">\n\n저, __계정에 등록된 이름__은\n Language Ribbon에 제 목소리를 등록하며,\n이를 통해 제 Language Ribbon 계정에\n제 목소리를 사용할 수 있는 권한을 부여함을 동의합니다.\n %1$s\n\n</string>
-    <string name="enscript">\n\nI, __Registered Name__ register my voice with Language Ribbon\nand agree to grant my Language Ribbon account\nthe rights to use my voice.\n %1$s\n\n</string>
+    <string name="krscript">\n\n저는 Language Ribbon에 제 목소리를 등록하며,\n이를 통해 제 Language Ribbon 계정에\n제 목소리를 사용할 수 있는 권한을 부여함을 동의합니다.\n %1$s\n\n</string>
+    <string name="enscript">\n\nI register my voice with Language Ribbon\nand agree to grant my Language Ribbon account\nthe rights to use my voice.\n %1$s\n\n</string>
 
     <string name="cerment">목소리 녹음 정확도를 평가한 결과입니다.</string>
     <string name="cer">* CER(Character Error Rate) </string>
     <string name="rating1">Language Ribbon\n사용 후기를 남겨 주세요!</string>
     <string name="rating2">별을 드래그해 별점을 매겨 주세요.</string>
     <string name="rating3">저희가 더 발전할 수 있도록\n아낌 없는 피드백을 남겨 주세요.</string>
-    <string name="rating4">사용 후기는 n개월 간 보관되며,\nLanguage Ribbon의 성능 개선에\n활용될 수 있습니다.\n아래 제출 버튼을 누르는 것은\n이에 동의하는 걸로 간주됩니다.</string>
+    <string name="rating4">사용 후기는 n개월 간 보관되며,\nLanguage Ribbon의 성능 개선에 활용될 수 있습니다.\n아래 제출 버튼을 누르는 것은\n이에 동의하는 걸로 간주됩니다.</string>
 
     <string name="ratingGood">Language Ribbon이 마음에 드셨군요! 감사합니다!</string>
     <string name="ratingBad">더 나은 Language Ribbon이 될 수 있도록 노력하겠습니다.</string>
