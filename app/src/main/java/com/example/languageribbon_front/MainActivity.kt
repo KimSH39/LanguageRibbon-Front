@@ -13,7 +13,18 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
-import com.example.languageribbon_front.VoiceFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -95,6 +106,55 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(versionfragment, userId)
                     finishOtherFragments(versionfragment)
                 }
+
+                R.id.logout -> {
+                    GlobalScope.launch(Dispatchers.IO) {
+                        try {
+                            val url = URL("https://d197-220-66-233-107.ngrok-free.app/logout/")
+                            val conn = url.openConnection() as HttpURLConnection
+                            conn.requestMethod = "POST"
+                            conn.doOutput = true  // Enable output for the POST request
+
+                            Log.d("Logout", "Data sent to server")
+
+                            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                                val tmp = InputStreamReader(conn.inputStream, "UTF-8")
+                                val reader = BufferedReader(tmp)
+                                val buffer = StringBuffer()
+
+                                var str: String? = null
+                                while (reader.readLine().also { str = it } != null) {
+                                    str?.let {
+                                        buffer.append(it)
+                                    }
+                                }
+                                val receiveMsg = buffer.toString()
+
+                                val sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.clear()
+                                editor.apply()
+
+                                val intent = intent
+                                finish()
+                                startActivity(intent)
+                                withContext(Dispatchers.Main) {
+                                    Log.d("Logout", "Data received from server: $receiveMsg")
+                                    // 여기에 UI 업데이트 로직을 추가하세요.
+                                }
+                            }
+                        } catch (e: Exception) {
+                            withContext(Dispatchers.Main) {
+                                Log.d("Logout", "Error: ${e.message}")
+                                // 여기에 에러 처리 로직을 추가하세요.
+                            }
+                        }
+                    }
+                }
+
+
+
+
 //                R.id.rating -> {
 //                    replaceFragment(ratingfragment, userId)
 //                    finishOtherFragments(ratingfragment)

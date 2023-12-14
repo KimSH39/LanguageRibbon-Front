@@ -19,6 +19,7 @@ import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
@@ -206,6 +207,9 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e("Login", "Exception: ${e.message}")
+        }
+        withContext(Dispatchers.Main) {
+            Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
         }
 
         return null
