@@ -24,4 +24,8 @@ interface MyApi {
         @Part userid: MultipartBody.Part,
         @Part audio: MultipartBody.Part
     ):  Call<ResponseBody>
+
+    @POST("logout/")
+    fun logout(
+    ):   Call<ServerResponse>
 }
