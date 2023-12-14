@@ -68,15 +68,25 @@ class MainFragment : Fragment() {
         userid = sharedPreferences.getString("userid", "")
 
         // userid 로그에 출력
-        Log.d("Upload", "User ID: $userid")
+        Log.d("Main", "User ID: $userid")
 
         binding.button.setOnClickListener {
-            if (isRecording) {
-                stopRecording()
+            val voiceInfoKr = sharedPreferences.getBoolean("voiceEn", true)
+            Log.d("Main","$voiceInfoKr")
+
+            if (!voiceInfoKr) {
+                // voice_info_kr이 false일 경우 VoiceFragment로 이동
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, VoiceFragment()) // container는 교체될 레이아웃의 id입니다.
+                transaction.commit()
             } else {
-                startRecording()
+                if (isRecording) {
+                    stopRecording()
+                } else {
+                    startRecording()
+                }
+                updateButtonImage()
             }
-            updateButtonImage()
         }
 
         binding.switchbtn.setOnClickListener {
