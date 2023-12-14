@@ -149,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
         try {
             Log.d("TestRegisterActivity", "Inside performLogin - Start")
 
-            val url = URL("http://ec2-3-12-247-228.us-east-2.compute.amazonaws.com:8000/login/")
+            val url = URL("https://d197-220-66-233-107.ngrok-free.app/login/")
             val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
             conn.doOutput = true  // Enable output for the POST request
@@ -186,6 +186,7 @@ class LoginActivity : AppCompatActivity() {
                 val voiceInfoEn = jsonData.optBoolean("voice_info_en", false)
                 val voiceInfoKr = jsonData.optBoolean("voice_info_kr", false)
                 val name = jsonData.optString("name", "")
+                val user_id = jsonData.optString("user_id", "")
 
                 // Save values to SharedPreferences
                 val sharedPreference = getSharedPreferences("Login", Context.MODE_PRIVATE)
@@ -194,7 +195,10 @@ class LoginActivity : AppCompatActivity() {
                 editor.putBoolean("voiceKr", voiceInfoEn)
                 editor.putBoolean("voiceEn", voiceInfoKr)
                 editor.putString("name", name)
+                editor.putString("userid", user_id)
                 editor.apply()
+
+                Log.d("Login", "$user_id")
 
                 return receiveMsg
             } else {
