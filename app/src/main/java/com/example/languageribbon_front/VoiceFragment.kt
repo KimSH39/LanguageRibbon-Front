@@ -91,7 +91,15 @@ class VoiceFragment : Fragment() {
                 STEP_3 -> transitionToStep(STEP_4, "다음")
                 STEP_4 -> {transitionToStep(STEP_5, "초기 목소리 설정 완료")
                     EnsendAudioToBackend()}
-                else -> {navigateToMainFragment()}
+                else -> {
+                    val sharedPreferences = requireActivity().getSharedPreferences("Login", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("voiceEn", true)
+                    editor.apply()
+
+                    navigateToMainFragment()
+                }
+
             }
         }
 
