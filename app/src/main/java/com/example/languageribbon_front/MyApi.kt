@@ -10,6 +10,7 @@ interface MyApi {
     @Multipart
     @POST("uploadvoice/")
     fun uploadAudioFile(
+        @Part userid: MultipartBody.Part,
         @Part audio: MultipartBody.Part,
         @Part lang: MultipartBody.Part
     ): Call<ServerResponse>
