@@ -78,12 +78,6 @@ class LoginActivity : AppCompatActivity() {
                     val id = binding.id.text.toString()
                     val pw = binding.password.text.toString()
 
-                    // 유저가 입력한 id, pw를 쉐어드에 저장한다.
-                    val sharedPreference = getSharedPreferences("Account", Context.MODE_PRIVATE)
-                    val editor = sharedPreference.edit()
-                    editor.putString("id", id)
-                    editor.putString("pw", pw)
-                    editor.apply()
                     Log.d("Login","$id, $pw")
 
                     GlobalScope.launch(Dispatchers.IO) {
@@ -95,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                                 finish()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.putExtra("userId", id)
                                 startActivity(intent)
                                 overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
                             }

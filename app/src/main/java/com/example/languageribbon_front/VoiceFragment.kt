@@ -48,6 +48,8 @@ class VoiceFragment : Fragment() {
     private lateinit var soundVisualizerView1: SoundVisualizerView
     private lateinit var soundVisualizerView2: SoundVisualizerView
 
+    private var userid: String? = null
+
     companion object {
         const val STEP_1 = 0
         const val STEP_2 = 1
@@ -65,7 +67,6 @@ class VoiceFragment : Fragment() {
 
     ): View? {
         _binding = FragmentVoiceBinding.inflate(inflater, container, false)
-        val userId = arguments?.getString("userId")
         return binding.root
     }
 
@@ -74,6 +75,13 @@ class VoiceFragment : Fragment() {
 
         soundVisualizerView1 = view.findViewById(R.id.soundVisualizerView1)
         soundVisualizerView2 = view.findViewById(R.id.soundVisualizerView2)
+
+        // userid 가져오기
+        val sharedPreferences = requireContext().getSharedPreferences("Login", Context.MODE_PRIVATE)
+        userid = sharedPreferences.getString("userid", "")
+
+        // userid 로그에 출력
+        Log.d("Upload", "User ID: $userid")
 
         binding.button.setOnClickListener {
             when (position) {
@@ -372,9 +380,10 @@ class VoiceFragment : Fragment() {
         val audioRequestBody = audioFile.asRequestBody("audio/*".toMediaTypeOrNull())
         val audioPart = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
         val langPart = MultipartBody.Part.createFormData("lang", "kr")
+        val useridPart = MultipartBody.Part.createFormData("user.id", userid ?: "")
 
         val apiService = RetrofitClient.createService(MyApi::class.java)
-        val call = apiService.uploadAudioFile(audioPart, langPart)
+        val call = apiService.uploadAudioFile(useridPart, audioPart, langPart)
 
         call.enqueue(object : Callback<ServerResponse> {
             override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
@@ -463,9 +472,10 @@ class VoiceFragment : Fragment() {
         val audioRequestBody = audioFile.asRequestBody("audio/*".toMediaTypeOrNull())
         val audioPart = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
         val langPart = MultipartBody.Part.createFormData("lang", "en")
+        val useridPart = MultipartBody.Part.createFormData("user.id", userid ?: "")
 
         val apiService = RetrofitClient.createService(MyApi::class.java)
-        val call = apiService.uploadAudioFile(audioPart, langPart)
+        val call = apiService.uploadAudioFile(useridPart, audioPart, langPart)
 
         call.enqueue(object : Callback<ServerResponse> {
             override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
