@@ -158,6 +158,7 @@
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="비밀번호(특수기호 포함 8자 이상)"
                     style="@style/customTextViewFontStyle"
+                    android:inputType="textPassword"
                     android:padding="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -169,6 +170,7 @@
                     android:background="@drawable/rounded_btn_gray"
                     android:hint="비밀번호 확인"
                     style="@style/customTextViewFontStyle"
+                    android:inputType="textPassword"
                     android:padding="10dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
