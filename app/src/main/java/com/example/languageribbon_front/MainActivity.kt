@@ -172,7 +172,6 @@ class MainActivity : AppCompatActivity() {
                     fragmentManager.beginTransaction().remove(fragment).commit()
             }
         }
-
     }
     override fun onBackPressed() {
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
