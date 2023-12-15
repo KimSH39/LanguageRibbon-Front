@@ -179,9 +179,19 @@ class MainActivity : AppCompatActivity() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val fragmentManager = supportFragmentManager
+            val fragment = fragmentManager.findFragmentById(R.id.container)
+
+            if (fragment is VersionFragment
+                || fragment is RatingFragment || fragment is RatingFragment) {
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.container, MainFragment()).commit()
+            } else {
+                super.onBackPressed()
+            }
         }
     }
+
     private fun replaceFragment(fragment: Fragment, userId: String?) {
         val bundle = Bundle()
         bundle.putString("userId", userId)

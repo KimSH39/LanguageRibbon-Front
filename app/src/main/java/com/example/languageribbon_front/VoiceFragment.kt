@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.addCallback
 import com.example.languageribbon_front.databinding.FragmentVoiceBinding
@@ -24,6 +25,7 @@ import java.util.Locale
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import androidx.core.content.ContextCompat.checkSelfPermission
+import com.bumptech.glide.Glide
 import com.example.languageribbon_front.MainFragment.Companion.PERMISSION_REQUEST_CODE
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
@@ -83,6 +85,19 @@ class VoiceFragment : Fragment() {
         // userid 로그에 출력
         Log.d("Upload", "User ID: $userid")
 
+        val gifImageView: ImageView = binding.KRcerloading
+        val gifImageView2: ImageView = binding.ENcerloading
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.cer_loading)
+            .into(gifImageView)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.cer_loading)
+            .into(gifImageView2)
+
         binding.button.setOnClickListener {
             when (position) {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
@@ -102,6 +117,7 @@ class VoiceFragment : Fragment() {
 
             }
         }
+
 
         binding.reset1.visibility = View.GONE
         binding.reset2.visibility = View.GONE
@@ -170,6 +186,7 @@ class VoiceFragment : Fragment() {
         // Here you can use FragmentManager to navigate to MainFragment.
         // Make sure to replace R.id.fragment_container with the actual container ID in your layout.
         requireActivity().supportFragmentManager.beginTransaction()
+            .remove(VoiceFragment())
             .replace(R.id.container, MainFragment())
             .addToBackStack(null)
             .commit()
@@ -396,6 +413,7 @@ class VoiceFragment : Fragment() {
         call.enqueue(object : Callback<ServerResponse> {
             override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
                 val serverResponse = response.body()
+                binding.KRcerloading.visibility = View.INVISIBLE
 
                 if (serverResponse != null) {
                     if (serverResponse.uploadSuccess == true) {
@@ -488,6 +506,7 @@ class VoiceFragment : Fragment() {
         call.enqueue(object : Callback<ServerResponse> {
             override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
                 val serverResponse = response.body()
+                binding.ENcerloading.visibility = View.INVISIBLE
 
                 if (serverResponse != null) {
                     if (serverResponse.uploadSuccess == true) {

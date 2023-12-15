@@ -243,29 +243,41 @@
                     android:layout_marginBottom="10dp"/>
 
 
-                <at.grabner.circleprogress.CircleProgressView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/krCER"
+                <FrameLayout
                     android:layout_width="150sp"
                     android:layout_height="150sp"
-                    android:layout_gravity="center"
-                    app:cpv_autoTextSize="true"
-                    app:cpv_barColor="#EAEAEA"
-                    app:cpv_barWidth="20sp"
-                    app:cpv_innerContourSize="0sp"
-                    app:cpv_maxValue="100"
-                    app:cpv_outerContourSize="0sp"
-                    app:cpv_rimColor="#EAEAEA"
-                    app:cpv_rimWidth="20sp"
-                    app:cpv_showUnit="true"
-                    app:cpv_spinColor="#ABF200"
-                    app:cpv_textColor="#1976D2"
-                    app:cpv_textScale="0.8"
-                    app:cpv_unit="%"
-                    app:cpv_unitColor="#EAEAEA"
-                    app:cpv_unitPosition="right_top"
-                    app:cpv_unitScale="0.8"
-                    app:cpv_value="0"/>
+                    android:layout_gravity="center">
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/krCER"
+                        android:layout_width="150sp"
+                        android:layout_height="150sp"
+                        app:cpv_autoTextSize="true"
+                        app:cpv_barColor="#2196F3"
+                        app:cpv_barWidth="20sp"
+                        app:cpv_innerContourSize="0sp"
+                        app:cpv_maxValue="100"
+                        app:cpv_outerContourSize="0sp"
+                        app:cpv_rimColor="#EAEAEA"
+                        app:cpv_rimWidth="20sp"
+                        app:cpv_showUnit="true"
+                        app:cpv_spinColor="#ABF200"
+                        app:cpv_textColor="#1976D2"
+                        app:cpv_textScale="0.8"
+                        app:cpv_unit="%"
+                        app:cpv_unitColor="#EAEAEA"
+                        app:cpv_unitPosition="right_top"
+                        app:cpv_unitScale="0.8"
+                        app:cpv_value="0"/>
+
+                    <ImageView
+                        android:id="@+id/KRcerloading"
+                        android:layout_width="200sp"
+                        android:layout_height="200sp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cer_loading"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -276,7 +288,16 @@
                     android:textSize="10sp"
                     android:layout_gravity="start"
                     android:layout_marginLeft="15sp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 본 퍼센테이지는 사용자의 가시성을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
+                    android:textColor="#BDBDBD"
+                    android:textSize="10sp"
+                    android:layout_marginLeft="15sp"
+                    android:layout_gravity="start"
                     android:layout_marginBottom="30dp"/>
 
                 <TextView
@@ -430,29 +451,41 @@
                     android:layout_marginBottom="10dp"/>
 
 
-                <at.grabner.circleprogress.CircleProgressView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/enCER"
+                <FrameLayout
                     android:layout_width="150sp"
                     android:layout_height="150sp"
-                    android:layout_gravity="center"
-                    app:cpv_autoTextSize="true"
-                    app:cpv_barColor="#2196F3"
-                    app:cpv_barWidth="20sp"
-                    app:cpv_innerContourSize="0sp"
-                    app:cpv_maxValue="100"
-                    app:cpv_outerContourSize="0sp"
-                    app:cpv_rimColor="#EAEAEA"
-                    app:cpv_rimWidth="20sp"
-                    app:cpv_showUnit="true"
-                    app:cpv_spinColor="#ABF200"
-                    app:cpv_textColor="#1976D2"
-                    app:cpv_textScale="0.8"
-                    app:cpv_unit="%"
-                    app:cpv_unitColor="#EAEAEA"
-                    app:cpv_unitPosition="right_top"
-                    app:cpv_unitScale="0.8"
-                    app:cpv_value="0"/>
+                    android:layout_gravity="center">
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/enCER"
+                        android:layout_width="150sp"
+                        android:layout_height="150sp"
+                        app:cpv_autoTextSize="true"
+                        app:cpv_barColor="#2196F3"
+                        app:cpv_barWidth="20sp"
+                        app:cpv_innerContourSize="0sp"
+                        app:cpv_maxValue="100"
+                        app:cpv_outerContourSize="0sp"
+                        app:cpv_rimColor="#EAEAEA"
+                        app:cpv_rimWidth="20sp"
+                        app:cpv_showUnit="true"
+                        app:cpv_spinColor="#ABF200"
+                        app:cpv_textColor="#1976D2"
+                        app:cpv_textScale="0.8"
+                        app:cpv_unit="%"
+                        app:cpv_unitColor="#EAEAEA"
+                        app:cpv_unitPosition="right_top"
+                        app:cpv_unitScale="0.8"
+                        app:cpv_value="0"/>
+
+                    <ImageView
+                        android:id="@+id/ENcerloading"
+                        android:layout_width="200sp"
+                        android:layout_height="200sp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cer_loading"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -463,6 +496,15 @@
                     android:textSize="10sp"
                     android:layout_marginLeft="15sp"
                     android:layout_marginTop="10dp"
+                    android:layout_gravity="start"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 본 퍼센테이지는 사용자의 가시성을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
+                    android:textColor="#BDBDBD"
+                    android:textSize="10sp"
+                    android:layout_marginLeft="15sp"
                     android:layout_gravity="start"
                     android:layout_marginBottom="30dp"/>
 
