@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
                 isExistBlank = true
                 Toast.makeText(this, "로그인 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
             }else {
+                Toast.makeText(this, "로그인 중입니다.", Toast.LENGTH_SHORT).show()
                 try {
                     sharedPreferences.edit {
                         putBoolean("login", true)
