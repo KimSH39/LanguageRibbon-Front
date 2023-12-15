@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -51,6 +52,9 @@ class VoiceFragment : Fragment() {
     private lateinit var soundVisualizerView2: SoundVisualizerView
 
     private var userid: String? = null
+
+    private var krCERcorrect = false
+    private var enCERcorrect = false
 
     companion object {
         const val STEP_1 = 0
@@ -101,18 +105,34 @@ class VoiceFragment : Fragment() {
         binding.button.setOnClickListener {
             when (position) {
                 STEP_1 -> transitionToStep(STEP_2, "다음")
-                STEP_2 -> {transitionToStep(STEP_3, "다음")
-                    KrsendAudioToBackend()}
-                STEP_3 -> transitionToStep(STEP_4, "다음")
-                STEP_4 -> {transitionToStep(STEP_5, "초기 목소리 설정 완료")
-                    EnsendAudioToBackend()}
-                else -> {
-                    val sharedPreferences = requireActivity().getSharedPreferences("Login", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putBoolean("voiceEn", true)
-                    editor.apply()
+                STEP_2 -> {
+                        transitionToStep(STEP_3, "다음")
+                        KrsendAudioToBackend()
 
-                    navigateToMainFragment()
+                    }
+                STEP_3 -> {
+                    if(krCERcorrect==true){
+                    transitionToStep(STEP_4, "다음")
+                    }else{
+                        Toast.makeText(requireContext(), "CER 점수가 낮습니다.\n다시 녹음해주세요.",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                STEP_4 -> {
+                        transitionToStep(STEP_5, "초기 목소리 설정 완료")
+                        EnsendAudioToBackend()
+                    }
+                else -> {
+                    if(enCERcorrect==true){
+                        val sharedPreferences = requireActivity().getSharedPreferences("Login", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("voiceEn", true)
+                        editor.apply()
+
+                        navigateToMainFragment()
+                    }else{
+                        Toast.makeText(requireContext(), "CER 점수가 낮습니다.\n다시 녹음해주세요.",Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
             }
@@ -183,8 +203,6 @@ class VoiceFragment : Fragment() {
     }
 
     private fun navigateToMainFragment() {
-        // Here you can use FragmentManager to navigate to MainFragment.
-        // Make sure to replace R.id.fragment_container with the actual container ID in your layout.
         requireActivity().supportFragmentManager.beginTransaction()
             .remove(VoiceFragment())
             .replace(R.id.container, MainFragment())
@@ -360,6 +378,11 @@ class VoiceFragment : Fragment() {
                 else -> "다음"
             }
             transitionToStep(previousPosition, buttonText)
+
+            krCERcorrect=false
+            enCERcorrect=false
+            binding.ENcerloading.visibility = View.VISIBLE
+            binding.KRcerloading.visibility = View.VISIBLE
         } else {
             requireActivity().onBackPressed()
         }
@@ -431,6 +454,7 @@ class VoiceFragment : Fragment() {
                                         1000
                                     )
                                     binding.krCER.setBarColor(Color.parseColor("#4198FF"))
+                                    krCERcorrect = true
                                 }
                                 cerValue >= 0.2 && cerValue < 0.3 -> {
                                     binding.krCER.setValueAnimated(cerPercentage.toFloat(), 1000)
@@ -523,6 +547,7 @@ class VoiceFragment : Fragment() {
                                         1000
                                     )
                                     binding.enCER.setBarColor(Color.parseColor("#4198FF"))
+                                    enCERcorrect = true
                                 }
                                 cerValue >= 0.2 && cerValue < 0.3 -> {
                                     binding.enCER.setValueAnimated(cerPercentage.toFloat(), 1000)
