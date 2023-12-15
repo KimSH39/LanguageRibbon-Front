@@ -293,7 +293,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="* 본 퍼센테이지는 사용자의 가시성을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
+                    android:text="* 본 퍼센테이지는 사용자의 이해도을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
                     android:textColor="#BDBDBD"
                     android:textSize="10sp"
                     android:layout_marginLeft="15sp"
@@ -501,7 +501,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="* 본 퍼센테이지는 사용자의 가시성을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
+                    android:text="* 본 퍼센테이지는 사용자의 이해도을 높이기 위해\n   percentage로 표현한 것입니다. (100 - (cerValue * 100))"
                     android:textColor="#BDBDBD"
                     android:textSize="10sp"
                     android:layout_marginLeft="15sp"
