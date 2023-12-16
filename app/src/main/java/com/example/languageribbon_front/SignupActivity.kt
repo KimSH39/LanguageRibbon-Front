@@ -181,7 +181,7 @@ class SignupActivity : AppCompatActivity() {
         try {
             Log.d("TestRegisterActivity", "Inside performLogin - Start")
 
-            val url = URL("https://d197-220-66-233-107.ngrok-free.ap/signup/")
+            val url = URL("https://d197-220-66-233-107.ngrok-free.app/signup/")
             val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
             conn.doOutput = true  // Enable output for the POST request
