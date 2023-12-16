@@ -264,8 +264,8 @@ class SignupActivity : AppCompatActivity() {
     override fun onBackPressed() {
         when (position) {
             STEP_1 -> super.onBackPressed()
-            STEP_2 -> transitionToStep(STEP_1, "Next")
-            else -> transitionToStep(STEP_2, "Next")
+            STEP_2 -> transitionToStep(STEP_1, "다음")
+            else -> transitionToStep(STEP_2, "다음")
         }
     }
 
