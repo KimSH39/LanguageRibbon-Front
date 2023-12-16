@@ -7,12 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.languageribbon_front.databinding.ActivitySignupBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -72,6 +74,7 @@ class SignupActivity : AppCompatActivity() {
                         "10대" -> 1
                         "20대" -> 2
                         "30대" -> 3
+                        "40대 이상" -> 4
                         else -> -1 // 예외 처리: 해당되는 값이 없을 경우 -1을 할당
                     }
 
@@ -139,36 +142,36 @@ class SignupActivity : AppCompatActivity() {
 
                     if (!isExistBlank && emailCorrect && studentNumCorrect && isAgree && passwordCorrect) {
                         // 회원가입 성공 토스트 메세지 띄우기
-                        Log.d("Signup","$email, $name, $password, $ageIndex, $job, $sex, $level")
+                        Log.d("Signup", "$email, $name, $password, $ageIndex, $job, $sex, $level")
                         GlobalScope.launch(Dispatchers.IO) {
                             val result = performSignup(username, name, sex, ageIndex, level, job, password, passwordCheck)
                             if (result != null) {
                                 runOnUiThread {
-                                    //로그인 성공 시 메인 화면으로 이동
+                                    //회원가입 성공 시 로그인 화면으로 이동
                                     val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                                     finish()
                                     startActivity(intent)
                                     overridePendingTransition(R.anim.fromright_toleft, R.anim.none)
                                 }
-                            }else {
+                            } else {
                                 // Signup failed, display the appropriate dialog
-                                dialog("blank")
+                                runOnUiThread {
+                                    dialog("username")
+                                }
                             }
                         }
-                    }
-                    else{
+                    } else {
                         // 상태에 따라 다른 다이얼로그 띄워주기
-                        if(isExistBlank){   // 작성 안한 항목이 있을 경우
-                            dialog("blank")
-                        }
-                        else if(!emailCorrect){ // 입력한 비밀번호가 다를 경우
-                            dialog("emailCorrect")
-                        }
-                        else if(!passwordCorrect){ // 입력한 비밀번호가 다를 경우
-                            dialog("passwordCorrect")
-                        }
-                        else if(!isAgree){ // 이용약관 동의 안한 경우
-                            dialog("Agree")
+                        runOnUiThread {
+                            if (isExistBlank) {   // 작성 안한 항목이 있을 경우
+                                dialog("blank")
+                            } else if (!emailCorrect) { // 입력한 이메일 형식이 맞지 않는 경우
+                                dialog("emailCorrect")
+                            } else if (!passwordCorrect) { // 입력한 비밀번호 형식이 맞지 않는 경우
+                                dialog("passwordCorrect")
+                            } else if (!isAgree) { // 이용약관 동의 안한 경우
+                                dialog("Agree")
+                            }
                         }
                     }
                 }
@@ -211,20 +214,43 @@ class SignupActivity : AppCompatActivity() {
 
                 Log.d("Login", "Data received from server: $receiveMsg")
 
-                // Parse the JSON data
-                val jsonData = JSONObject(receiveMsg)
+                try {
+                    // Parse the JSON data
+                    val jsonData = JSONObject(receiveMsg)
+                    val message = jsonData.optString("message", "")
 
-                val message = jsonData.optString("message", "")
+                    if (message.contains("registration") && message.contains("successfully")) {
+                        // Success condition
+                        Log.d("Signup", "Registration successful: $message")
 
-                Log.e("Signup","${message}")
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                        }
 
-                return receiveMsg
-            } else {
-                Log.d("login", "HTTP connection failed with response code: ${conn.responseCode}")
+                        return receiveMsg
+                    } else {
+                        Log.e("Signup", "Unexpected response message: $message")
+
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Log.e("Signup", "JSONException: ${e.message}")
+
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e("Signup", "Exception: ${e.message}")
+
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-            Log.e("Signup", "MalformedURLException: ${e.message}")
         } catch (e: IOException) {
             e.printStackTrace()
             Log.e("Signup", "IOException: ${e.message}")
@@ -232,7 +258,6 @@ class SignupActivity : AppCompatActivity() {
             e.printStackTrace()
             Log.e("Signup", "Exception: ${e.message}")
         }
-
         return null
     }
 
@@ -269,9 +294,9 @@ class SignupActivity : AppCompatActivity() {
             dialog.setTitle("회원가입 실패")
             dialog.setMessage("입력란을 정확히 작성해주세요")
         }
-        else if(type.equals("studentNumCorrect")){
+        else if(type.equals("username")){
             dialog.setTitle("회원가입 실패")
-            dialog.setMessage("명지대 통합로그인 아이디, 비밀번호를 입력해주세요!")
+            dialog.setMessage("이미 가입한 아이디 입니다.")
         }
         else if(type.equals("emailCorrect")){
             dialog.setTitle("회원가입 실패")
@@ -286,16 +311,14 @@ class SignupActivity : AppCompatActivity() {
             dialog.setMessage("이용약관에 동의해주세요")
         }
 
-        val dialog_listener = object: DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                when(which){
-                    DialogInterface.BUTTON_POSITIVE ->
-                        Log.d(TAG, "다이얼로그")
-                }
+        val dialog_listener = DialogInterface.OnClickListener { _, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE ->
+                    Log.d(TAG, "다이얼로그")
             }
         }
 
-        dialog.setPositiveButton("확인",dialog_listener)
+        dialog.setPositiveButton("확인", dialog_listener)
         dialog.show()
     }
     private var isErrorResponse = false // 에러 응답 여부를 나타내는 변수
