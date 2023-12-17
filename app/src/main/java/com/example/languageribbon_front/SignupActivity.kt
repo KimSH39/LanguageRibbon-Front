@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.languageribbon_front.databinding.ActivitySignupBinding
@@ -99,32 +97,30 @@ class SignupActivity : AppCompatActivity() {
                     Log.d("선택된 직업", selectedlevel);
                     val level = if (selectedlevel == "상") 1 else if (selectedlevel == "중") 2 else 3
 
-                    binding.agreeAll.setOnCheckedChangeListener { _, isChecked ->
-                        binding.agree1.isChecked = isChecked
-                        binding.agree2.isChecked = isChecked
-                    }
+                    val agreeAll = findViewById<CheckBox>(R.id.agreeAll)
+                    val agree1 = findViewById<CheckBox>(R.id.agree1)
+                    val agree2 = findViewById<CheckBox>(R.id.agree2)
 
-                    binding.agree1.setOnCheckedChangeListener { _, isChecked ->
-                        if (!isChecked) {
-                            binding.agreeAll.isChecked = false
-                        } else if (isChecked && binding.agree2.isChecked) {
-                            binding.agreeAll.isChecked = true
+                    agreeAll.setOnCheckedChangeListener { buttonView, isChecked ->
+                        if (buttonView.isPressed) {
+                            agree1.isChecked = isChecked
+                            agree2.isChecked = isChecked
                         }
                     }
 
-                    binding.agree2.setOnCheckedChangeListener { _, isChecked ->
-                        if (!isChecked) {
-                            binding.agreeAll.isChecked = false
-                        } else if (isChecked && binding.agree1.isChecked) {
-                            binding.agreeAll.isChecked = true
+                    val individualCheckListener = CompoundButton.OnCheckedChangeListener { _, _ ->
+                        agreeAll.setOnCheckedChangeListener(null)
+                        agreeAll.isChecked = agree1.isChecked && agree2.isChecked
+                        agreeAll.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (buttonView.isPressed) {
+                                agree1.isChecked = isChecked
+                                agree2.isChecked = isChecked
+                            }
                         }
                     }
 
-                    if(!binding.agreeAll.isChecked){
-                        isAgree = false
-                    } else {
-                        isAgree = true
-                    }
+                    agree1.setOnCheckedChangeListener(individualCheckListener)
+                    agree2.setOnCheckedChangeListener(individualCheckListener)
 
                     // 유저가 항목을 다 채우지 않았을 경우
                     if (name.isEmpty() && email.isEmpty() && password.isEmpty() && passwordCheck.isEmpty()) {
