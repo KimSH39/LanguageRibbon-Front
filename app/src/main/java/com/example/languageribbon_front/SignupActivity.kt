@@ -122,6 +122,12 @@ class SignupActivity : AppCompatActivity() {
                     agree1.setOnCheckedChangeListener(individualCheckListener)
                     agree2.setOnCheckedChangeListener(individualCheckListener)
 
+                    if(!binding.agreeAll.isChecked){
+                        isAgree = false
+                    } else {
+                        isAgree = true
+                    }
+
                     // 유저가 항목을 다 채우지 않았을 경우
                     if (name.isEmpty() && email.isEmpty() && password.isEmpty() && passwordCheck.isEmpty()) {
                         isExistBlank = true
