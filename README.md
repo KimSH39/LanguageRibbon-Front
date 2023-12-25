@@ -11,11 +11,14 @@
 
 
  ## Contributors
+ <img width="1000" alt="image" src="https://github.com/MJU-Capstone-2023-2/LanguageRibbon-Front/assets/80878955/c89c6959-6c40-4dba-be55-2711a4a87b79">
+ 
 |김소현|김민희|이동혁|채기웅|최지현|
 |:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/63898043?v=4" width="200px">|<img src="https://avatars.githubusercontent.com/u/76530562?v=4" width="200px">|<img src="https://avatars.githubusercontent.com/u/100830963?v=4" width="200px">|<img src="https://avatars.githubusercontent.com/u/77622897?v=4" width="200px">|<img src="https://avatars.githubusercontent.com/u/80878955?v=4" width="200px">|
 |백엔드|데이터|데이터|백엔드|프론트엔드|
 |[@KimSH39](https://github.com/KimSH39)|[@heehminh](https://github.com/heehminh)|[@dhe625](https://github.com/dhe625)|[@dipito](https://github.com/Gi-Woong)|[@gus1043](https://github.com/gus1043)|    
+
 <br/>     
    
 
