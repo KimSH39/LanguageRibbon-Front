@@ -1,7 +1,7 @@
 # LanguageRibbon-Front
 명지대학교 캡스톤디자인2팀 Laguage Ribbon 앱 프론트
 
-[최종 슬라이드 보러가기](https://docs.google.com/presentation/d/1wNBw8ZZo7-R99wljBCnXkKp9fqtqP_t6pFmW5U-gg4o/edit?usp=sharing)  
+[최종 슬라이드 보러가기](https://docs.google.com/presentation/d/1rXH0QK47wnOr6Efmo3gGsO6lQkubUDyMQaJ2cKYjO1o/edit?usp=sharing)  
 <br/>    
 
 ![슬라이드3](https://github.com/gus1043/LanguageRibbon-Front/assets/80878955/a6eae931-97d1-46e7-b7ef-4540cd8f1a9a)
