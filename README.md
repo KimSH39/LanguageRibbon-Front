@@ -1,5 +1,5 @@
 # LanguageRibbon-Front
-명지대학교 캡스톤디자인2팀 Laguage Ribbon 앱 프론트
+명지대학교 캡스톤디자인2팀 Language Ribbon 앱 프론트
 
 [최종 슬라이드 보러가기](https://docs.google.com/presentation/d/1rXH0QK47wnOr6Efmo3gGsO6lQkubUDyMQaJ2cKYjO1o/edit?usp=sharing)  
 <br/>    
